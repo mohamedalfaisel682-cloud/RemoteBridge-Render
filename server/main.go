@@ -38,7 +38,6 @@ var hub = Hub{
 }
 
 func main() {
-	// الحصول على المنفذ من Render أو الافتراضي 10000
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "10000"
@@ -46,7 +45,7 @@ func main() {
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("RemoteBridge Signaling Server is Active"))
+		w.Write([]byte("RemoteBridge Signaling Server is Live!"))
 	})
 
 	http.HandleFunc("/ws", handleWebSocket)
