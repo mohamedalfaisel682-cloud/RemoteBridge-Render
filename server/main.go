@@ -38,6 +38,7 @@ var hub = Hub{
 }
 
 func main() {
+	// الحصول على المنفذ من Render أو الافتراضي 10000
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "10000"
@@ -45,15 +46,16 @@ func main() {
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("RemoteBridge Signaling Server is Live!"))
+		w.Write([]byte("RemoteBridge Signaling Server is Active"))
 	})
 
 	http.HandleFunc("/ws", handleWebSocket)
 
 	addr := "0.0.0.0:" + port
-	log.Printf("Signaling server listening on %s", addr)
+	log.Printf("Server starting on %s", addr)
+	
 	if err := http.ListenAndServe(addr, nil); err != nil {
-		log.Fatalf("Server failed: %v", err)
+		log.Fatalf("ListenAndServe error: %v", err)
 	}
 }
 
@@ -96,13 +98,15 @@ func handleWebSocket(w http.ResponseWriter, r *http.Request) {
 				Role       string `json:"role"`
 				DeviceName string `json:"deviceName"`
 			}
-			json.Unmarshal(msgBytes, &reg)
+			if err := json.Unmarshal(msgBytes, &reg); err != nil {
+				continue
+			}
 
 			currentDeviceID = reg.DeviceID
 			client := &Client{
 				ID:     reg.DeviceID,
 				Role:   reg.Role,
-				Name:   reg.DeviceName, // تم التصحيح هنا ليطابق DeviceName
+				Name:   reg.DeviceName,
 				Socket: conn,
 			}
 
@@ -117,7 +121,7 @@ func handleWebSocket(w http.ResponseWriter, r *http.Request) {
 			conn.WriteMessage(websocket.TextMessage, resp)
 
 			if reg.Role == "host" {
-				broadcastHostOnline(reg.DeviceID, reg.DeviceName) // تم التصحيح هنا ليطابق DeviceName
+				broadcastHostOnline(reg.DeviceID, reg.DeviceName)
 			} else if reg.Role == "controller" {
 				sendHostList(conn)
 			}
@@ -126,7 +130,9 @@ func handleWebSocket(w http.ResponseWriter, r *http.Request) {
 			var meta struct {
 				To string `json:"to"`
 			}
-			json.Unmarshal(msgBytes, &meta)
+			if err := json.Unmarshal(msgBytes, &meta); err != nil {
+				continue
+			}
 
 			hub.mu.Lock()
 			targetClient, ok := hub.clients[meta.To]
