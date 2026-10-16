@@ -28,11 +28,6 @@ type HostInfo struct {
 	Online     bool   `json:"online"`
 }
 
-type Message struct {
-	Type string          `json:"type"`
-	Data json.RawMessage `json:"-"`
-}
-
 type Hub struct {
 	mu      sync.Mutex
 	clients map[string]*Client
@@ -48,6 +43,7 @@ func main() {
 		port = "8080"
 	}
 
+	// مسار الفحص الصحي (Health Check) لضمان استقرار الخدمة على Render
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte("RemoteBridge Signaling Server is Active & Healthy!"))
@@ -55,7 +51,6 @@ func main() {
 
 	http.HandleFunc("/ws", handleWebSocket)
 
-	// الربط على 0.0.0.0 لضمان رؤية Render للخدمة في الحاوية
 	addr := "0.0.0.0:" + port
 	log.Printf("Signaling server listening on %s", addr)
 	if err := http.ListenAndServe(addr, nil); err != nil {
@@ -63,12 +58,10 @@ func main() {
 	}
 }
 
-
-
 func handleWebSocket(w http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
-		log.Println("Upgrade error:", err)
+		log.Println("WebSocket upgrade error:", err)
 		return
 	}
 	defer conn.Close()
