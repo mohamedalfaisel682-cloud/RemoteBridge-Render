@@ -28,6 +28,11 @@ type HostInfo struct {
 	Online     bool   `json:"online"`
 }
 
+type Message struct {
+	Type string          `json:"type"`
+	Data json.RawMessage `json:"-"`
+}
+
 type Hub struct {
 	mu      sync.Mutex
 	clients map[string]*Client
@@ -38,30 +43,32 @@ var hub = Hub{
 }
 
 func main() {
+	// Render يمرر المنفذ عبر متغير PORT، وإذا لم يوجد نستخدم 10000 افتراضياً
 	port := os.Getenv("PORT")
 	if port == "" {
-		port = "8080"
+		port = "10000"
 	}
 
-	// مسار الفحص الصحي (Health Check) لضمان استقرار الخدمة على Render
+	// مسار الفحص الصحي الأساسي لـ Render
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("RemoteBridge Signaling Server is Active & Healthy!"))
+		w.Write([]byte("RemoteBridge Signaling Server is Live!"))
 	})
 
 	http.HandleFunc("/ws", handleWebSocket)
 
+	// الاستماع الإلزامي على 0.0.0.0 لجميع واجهات الحاوية
 	addr := "0.0.0.0:" + port
-	log.Printf("Signaling server listening on %s", addr)
+	log.Printf("Signaling server successfully bound and listening on %s", addr)
 	if err := http.ListenAndServe(addr, nil); err != nil {
-		log.Fatal("ListenAndServe: ", err)
+		log.Fatalf("Server failed to start: %v", err)
 	}
 }
 
 func handleWebSocket(w http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(w, r, nil)
 	if err != nil {
-		log.Println("WebSocket upgrade error:", err)
+		log.Println("Upgrade error:", err)
 		return
 	}
 	defer conn.Close()
@@ -103,7 +110,7 @@ func handleWebSocket(w http.ResponseWriter, r *http.Request) {
 			client := &Client{
 				ID:     reg.DeviceID,
 				Role:   reg.Role,
-				Name:   reg.DeviceName,
+				Name:   reg.Name,
 				Socket: conn,
 			}
 
@@ -118,7 +125,7 @@ func handleWebSocket(w http.ResponseWriter, r *http.Request) {
 			conn.WriteMessage(websocket.TextMessage, resp)
 
 			if reg.Role == "host" {
-				broadcastHostOnline(reg.DeviceID, reg.DeviceName)
+				broadcastHostOnline(reg.DeviceID, reg.Name)
 			} else if reg.Role == "controller" {
 				sendHostList(conn)
 			}
