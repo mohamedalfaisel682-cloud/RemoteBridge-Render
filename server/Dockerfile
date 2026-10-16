@@ -2,13 +2,13 @@ FROM golang:1.22-alpine AS builder
 
 WORKDIR /app
 
-# نسخ ملفات تعريف المشروع
+# نسخ ملفات المشروع
 COPY go.mod ./
 
-# تنزيل الاعتماديات وتوليد go.sum تلقائياً
-RUN go mod tidy
+# تثبيت مكتبة websocket صراحة
+RUN go get github.com/gorilla/websocket
 
-# نسخ ملف الكود الرئيسي
+# نسخ كود السيرفر
 COPY main.go ./
 
 # بناء السيرفر التنفيذي
