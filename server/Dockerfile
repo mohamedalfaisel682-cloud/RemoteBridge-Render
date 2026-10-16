@@ -2,12 +2,11 @@ FROM golang:1.22-alpine AS builder
 
 WORKDIR /app
 
-# نسخ ملفات الاعتماديات وتثبيت الحزمة
+# نسخ ملفات الوحدات والتنزيل المباشر
 COPY go.mod ./
-RUN go mod init remotebridge-server || true
-RUN go get github.com/gorilla/websocket
+RUN go mod download
 
-# نسخ كود السيرفر
+# نسخ ملف الكود الرئيسي
 COPY main.go ./
 
 # بناء الملف التنفيذي
