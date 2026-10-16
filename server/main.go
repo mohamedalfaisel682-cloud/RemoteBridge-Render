@@ -114,7 +114,6 @@ func handleWebSocket(w http.ResponseWriter, r *http.Request) {
 			hub.clients[reg.DeviceID] = client
 			hub.mu.Unlock()
 
-			// رد تأكيد التسجيل
 			resp, _ := json.Marshal(map[string]interface{}{
 				"type": "registered",
 				"ok":   true,
