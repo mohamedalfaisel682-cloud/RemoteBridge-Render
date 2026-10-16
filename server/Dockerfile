@@ -2,11 +2,12 @@ FROM golang:1.22-alpine AS builder
 
 WORKDIR /app
 
-# تهيئة وحدة Go جديدة وتنزيل حزمة websocket وضمان توليد go.sum و go.mod الصحيحين
-RUN go mod init remotebridge-server && \
-    go get github.com/gorilla/websocket
+# نسخ ملفات الاعتماديات وتثبيت الحزمة
+COPY go.mod ./
+RUN go mod init remotebridge-server || true
+RUN go get github.com/gorilla/websocket
 
-# نسخ كود السيرفر الرئيسي
+# نسخ كود السيرفر
 COPY main.go ./
 
 # بناء الملف التنفيذي
