@@ -50,16 +50,19 @@ func main() {
 
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("RemoteBridge Signaling Server is Running!"))
+		w.Write([]byte("RemoteBridge Signaling Server is Active & Healthy!"))
 	})
 
 	http.HandleFunc("/ws", handleWebSocket)
 
-	log.Printf("Signaling server started on port %s", port)
-	if err := http.ListenAndServe(":"+port, nil); err != nil {
+	// الربط على 0.0.0.0 لضمان رؤية Render للخدمة في الحاوية
+	addr := "0.0.0.0:" + port
+	log.Printf("Signaling server listening on %s", addr)
+	if err := http.ListenAndServe(addr, nil); err != nil {
 		log.Fatal("ListenAndServe: ", err)
 	}
 }
+
 
 func handleWebSocket(w http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(w, r, nil)
