@@ -8,7 +8,7 @@ RUN go mod download
 
 # نسخ ملف الكود الرئيسي
 COPY main.go ./
-
+RUN go mod tidy
 # بناء الملف التنفيذي
 RUN CGO_ENABLED=0 GOOS=linux go build -o /server main.go
 
