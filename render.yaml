@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: remotebridge-signaling
+    env: docker
+    plan: free
+    region: frankfurt
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: 8080
