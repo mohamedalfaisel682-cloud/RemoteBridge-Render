@@ -2,12 +2,11 @@ FROM golang:1.22-alpine AS builder
 
 WORKDIR /app
 
-# نسخ ملفات الوحدات والتنزيل المباشر
-COPY go.mod ./
-RUN go mod download
+# نسخ الكود والتعريفات
+COPY go.mod main.go ./
 
-# نسخ ملف الكود الرئيسي
-COPY main.go ./
+# تنظيف وتحديث الاعتماديات وتوليد go.sum تلقائياً أثناء البناء
+RUN go mod tidy
 
 # بناء الملف التنفيذي
 RUN CGO_ENABLED=0 GOOS=linux go build -o /server main.go
