@@ -57,7 +57,7 @@ class HostViewModel(
     fun startHost() {
         viewModelScope.launch {
             // التحقق من الأذونات قبل بدء الخدمة
-            val missing = HostForegroundService.getMissingPermissions()
+            val missing = HostForegroundService.getMissingPermissions(getApplication())
             _missingPermissions.value = missing
 
             if (missing.isNotEmpty()) {

@@ -31,6 +31,7 @@ class SettingsRepository(private val context: Context) {
     }
 
     companion object {
+        const val DEFAULT_FLY_URL = "wss://my-ai-bridge-app.fly.dev/ws"
         const val DEFAULT_RENDER_URL = "wss://remotebridge1.onrender.com/ws"
         const val DEFAULT_LOCAL_URL = "ws://10.0.2.2:10000/ws"
         const val DEFAULT_SERVER_URL = DEFAULT_RENDER_URL

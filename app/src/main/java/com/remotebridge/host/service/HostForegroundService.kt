@@ -1,5 +1,6 @@
 package com.remotebridge.host.service
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -20,6 +21,7 @@ import com.remotebridge.core.signaling.Signal
 import com.remotebridge.core.signaling.SignalingClient
 import com.remotebridge.core.signaling.SignalingState
 import com.remotebridge.core.webrtc.PeerConnectionManager
+import org.webrtc.PeerConnection
 import com.remotebridge.core.webrtc.PeerState
 import com.remotebridge.core.webrtc.FrameProtocol
 import com.remotebridge.host.provider.HostDataProvider
@@ -74,12 +76,11 @@ class HostForegroundService : LifecycleService() {
             private set
 
         var screenCaptureIntent: Intent? = null
-    }
 
-    // قيمة إعدادات STUN تُستبدل عند بدء الخدمة من الإعدادات المخزنة
-    private lateinit var stunServerValue: String
+        // قيمة إعدادات STUN تُستبدل عند بدء الخدمة من الإعدادات المخزنة
+        var stunServerValue: String = "stun:stun.l.google.com:19302"
 
-        fun startCamera(front: Boolean, audio: Boolean = true): Boolean {
+    fun startCamera(front: Boolean, audio: Boolean = true): Boolean {
             val inst = activeInstance ?: return false
             val success = inst.peerManager?.startCameraStreaming(front, audio) ?: false
             if (success) {
@@ -109,6 +110,27 @@ class HostForegroundService : LifecycleService() {
             val inst = activeInstance ?: return
             inst.peerManager?.stopStreaming()
             cameraStreamingState.value = CameraStreamingState(isStreaming = false)
+        }
+
+        /**
+         * الحصول على قائمة الأذونات الناقصة لعرضها في واجهة المستخدم.
+         * تستدعى من نموذج العرض (HostViewModel) قبل بدء الخدمة.
+         */
+        fun getMissingPermissions(context: Context): List<String> {
+            val required = mutableListOf(
+                Manifest.permission.CAMERA,
+                Manifest.permission.RECORD_AUDIO
+            )
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                required.add(Manifest.permission.READ_MEDIA_IMAGES)
+                required.add(Manifest.permission.READ_MEDIA_VIDEO)
+                required.add(Manifest.permission.READ_MEDIA_AUDIO)
+            } else {
+                required.add(Manifest.permission.READ_EXTERNAL_STORAGE)
+            }
+            return required.filter {
+                ContextCompat.checkSelfPermission(context, it) != PackageManager.PERMISSION_GRANTED
+            }
         }
     }
 
@@ -276,22 +298,8 @@ class HostForegroundService : LifecycleService() {
     }
 
     /**
-     * الحصول على قائمة الأذونات الناقصة لعرضها في واجهة المستخدم.
+     * (وحدت الدالة إلى نسخة الـ companion المدرِكة للإصدارات في أعلى الفئة.)
      */
-    fun getMissingPermissions(): List<String> {
-        val criticalPermissions = arrayOf(
-            Manifest.permission.CAMERA,
-            Manifest.permission.RECORD_AUDIO,
-            Manifest.permission.READ_MEDIA_IMAGES,
-            Manifest.permission.READ_MEDIA_VIDEO,
-            Manifest.permission.READ_MEDIA_AUDIO,
-            Manifest.permission.INTERNET,
-            Manifest.permission.ACCESS_NETWORK_STATE
-        )
-        return criticalPermissions.filter {
-            ContextCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED
-        }
-    }
 
     /**
      * يعالج رسالة إشارات واردة من خادم الإشارات.
