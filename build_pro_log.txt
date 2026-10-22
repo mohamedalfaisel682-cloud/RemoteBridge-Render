@@ -1,0 +1,210 @@
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/8.9/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :app:checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :app:generateDebugBuildConfig UP-TO-DATE
+> Task :app:checkDebugAarMetadata UP-TO-DATE
+> Task :app:generateDebugResValues UP-TO-DATE
+> Task :app:mapDebugSourceSetPaths UP-TO-DATE
+> Task :app:generateDebugResources UP-TO-DATE
+> Task :app:mergeDebugResources UP-TO-DATE
+> Task :app:packageDebugResources UP-TO-DATE
+> Task :app:parseDebugLocalResources UP-TO-DATE
+> Task :app:createDebugCompatibleScreenManifests UP-TO-DATE
+> Task :app:extractDeepLinksDebug UP-TO-DATE
+> Task :app:processDebugMainManifest UP-TO-DATE
+> Task :app:processDebugManifest UP-TO-DATE
+> Task :app:processDebugManifestForPackage UP-TO-DATE
+> Task :app:processDebugResources UP-TO-DATE
+> Task :app:kspDebugKotlin UP-TO-DATE
+> Task :app:javaPreCompileDebug UP-TO-DATE
+> Task :app:mergeDebugShaders UP-TO-DATE
+> Task :app:compileDebugShaders NO-SOURCE
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :app:mergeDebugAssets UP-TO-DATE
+> Task :app:compressDebugAssets UP-TO-DATE
+> Task :app:desugarDebugFileDependencies UP-TO-DATE
+> Task :app:checkDebugDuplicateClasses UP-TO-DATE
+> Task :app:mergeExtDexDebug UP-TO-DATE
+> Task :app:mergeLibDexDebug UP-TO-DATE
+> Task :app:mergeDebugJniLibFolders UP-TO-DATE
+> Task :app:mergeDebugNativeLibs UP-TO-DATE
+> Task :app:stripDebugDebugSymbols UP-TO-DATE
+> Task :app:validateSigningDebug UP-TO-DATE
+> Task :app:writeDebugAppMetadata UP-TO-DATE
+> Task :app:writeDebugSigningConfigVersions UP-TO-DATE
+> Task :app:compileDebugKotlin
+.\gradlew : e: 
+file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/host/service/NotificationHelper.kt:12:25 
+Unresolved reference 'R'.
+At line:25 char:129
++ ... $env:PATH"; .\gradlew assembleDebug --no-daemon --console=plain 2>&1  ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (e: file:///F:/A... reference 'R'.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+e: 
+file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/host/service/NotificationHelper.kt:31:31 
+Unresolved reference 'R'.
+e: 
+file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/host/service/NotificationHelper.kt:34:45 
+Unresolved reference 'R'.
+e: 
+file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/host/service/NotificationHelper.kt:54:48 
+Unresolved reference 'R'.
+e: 
+file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/host/service/NotificationHelper.kt:55:47 
+Unresolved reference 'R'.
+e: 
+file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/host/service/NotificationHelper.kt:56:27 
+Unresolved reference 'R'.
+e: 
+file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/host/service/NotificationHelper.kt:57:14 
+Unresolved reference 'setOngoing'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/controller/ControllerScreen
+.kt:43:25 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/controller/ControllerScreen
+.kt:77:47 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/controller/ControllerScreen
+.kt:114:39 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/controller/ControllerScreen
+.kt:129:51 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/controller/ControllerScreen
+.kt:137:47 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/controller/ControllerScreen
+.kt:166:37 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/controller/ControllerScreen
+.kt:179:28 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/controller/ControllerScreen
+.kt:181:28 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/controller/ControllerScreen
+.kt:183:28 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/controller/ControllerScreen
+.kt:185:28 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/controller/ControllerScreen
+.kt:187:28 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/controller/ControllerScreen
+.kt:189:28 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/controller/ControllerScreen
+.kt:191:28 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/controller/ControllerScreen
+.kt:255:41 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/dashboard/DashboardScreen.k
+t:46:25 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/dashboard/DashboardScreen.k
+t:81:58 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/dashboard/DashboardScreen.k
+t:82:60 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/dashboard/DashboardScreen.k
+t:83:62 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/dashboard/DashboardScreen.k
+t:84:61 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/dashboard/DashboardScreen.k
+t:85:60 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/dashboard/DashboardScreen.k
+t:86:65 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/dashboard/DashboardScreen.k
+t:87:66 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/dashboard/DashboardScreen.k
+t:88:57 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/dashboard/DashboardScreen.k
+t:94:47 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/dashboard/DashboardScreen.k
+t:152:43 Unresolved reference 'R'.
+e: 
+file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/files/FileListScreen.kt:40:25 
+Unresolved reference 'R'.
+e: 
+file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/files/FileListScreen.kt:72:42 
+Unresolved reference 'R'.
+e: 
+file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/files/FileListScreen.kt:73:42 
+Unresolved reference 'R'.
+e: 
+file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/files/FileListScreen.kt:74:41 
+Unresolved reference 'R'.
+e: 
+file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/files/FileListScreen.kt:75:32 
+Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/files/FileListScreen.kt:108
+:45 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/files/FileListScreen.kt:121
+:47 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/files/FileListScreen.kt:182
+:57 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/home/HomeScreen.kt:33:25 
+Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/home/HomeScreen.kt:48:47 
+Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/home/HomeScreen.kt:53:65 
+Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/home/HomeScreen.kt:79:39 
+Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/home/HomeScreen.kt:89:40 
+Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/home/HomeScreen.kt:90:46 
+Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/home/HomeScreen.kt:97:40 
+Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/home/HomeScreen.kt:98:46 
+Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/host/HostScreen.kt:46:25 
+Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/host/HostScreen.kt:83:47 
+Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/host/HostScreen.kt:121:44 
+Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/host/HostScreen.kt:122:45 
+Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/host/HostScreen.kt:152:41 
+Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/host/HostScreen.kt:169:41 
+Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/host/HostScreen.kt:192:51 
+Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/host/HostScreen.kt:196:51 
+Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/host/HostScreen.kt:226:51 
+Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/host/HostScreen.kt:230:51 
+Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/host/HostScreen.kt:244:37 
+Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/settings/SettingsScreen.kt:
+33:25 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/settings/SettingsScreen.kt:
+55:47 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/settings/SettingsScreen.kt:
+79:47 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/settings/SettingsScreen.kt:
+80:53 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/settings/SettingsScreen.kt:
+88:47 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/settings/SettingsScreen.kt:
+89:53 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/settings/SettingsScreen.kt:
+101:43 Unresolved reference 'R'.
+e: file:///F:/Ai/agent%20folders/RemoteBridge/app/src/main/java/com/remotebridge/ui/screens/settings/SettingsScreen.kt:
+119:37 Unresolved reference 'R'.
+
+> Task :app:compileDebugKotlin FAILED
+w: Detected multiple Kotlin daemon sessions at 
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':app:compileDebugKotlin'.
+> A failure occurred while executing 
+org.jetbrains.kotlin.compilerRunner.GradleCompilerRunnerWithWorkers$GradleKotlinCompilerWorkAction
+   > Compilation error. See log for more details
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 1m 5s
+?? actionable tasks: ? executed, ?? up-to-date

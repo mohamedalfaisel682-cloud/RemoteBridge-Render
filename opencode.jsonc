@@ -1,0 +1,40 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "C:/Users/alfaisalytec/Documents/المشروع الافتراضي"
+      ]
+    },
+    "fetch": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-fetch"
+      ]
+    },
+    "web-search": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-server-web-search"
+      ]
+    },
+    "android-adb": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "mcp-server-android-adb"
+      ]
+    },
+    "shell": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-shell"
+      ]
+    }
+  }
+}

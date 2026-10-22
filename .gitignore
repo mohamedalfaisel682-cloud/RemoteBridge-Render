@@ -1,0 +1,49 @@
+# =============================================================================
+# RemoteBridge Pro Studio - .gitignore
+# =============================================================================
+
+# Android
+*.apk
+*.aab
+*.keystore
+*.jks
+*.key
+*.properties.local
+.idea/
+*.iml
+.gradle/
+build/
+app/build/
+local.properties
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+build_log.txt
+build_audit_log*.txt
+apk_stat.txt
+apk_info.txt
+dir_audit.txt
+
+# MCP / OpenCode
+.opencode/
+
+# IDE
+.vscode/
+*.swp
+*.swo
+
+# Certificates & Secrets
+*.pem
+*.crt
+*.p12
+my-upload-key.jks
+debug.keystore

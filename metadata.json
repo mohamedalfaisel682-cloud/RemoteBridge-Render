@@ -1,0 +1,6 @@
+{
+  "name": "جسر عن بعد",
+  "description": "تطبيق جسر عن بعد (RemoteBridge Pro) لمشاركة واستعراض بيانات الهاتف القديم والتحكم عن بعد عبر WebRTC وخادم الإشارات",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

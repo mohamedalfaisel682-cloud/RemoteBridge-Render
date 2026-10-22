@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <files-path
+        name="bridge_cache"
+        path="bridge_cache/" />
+    <cache-path
+        name="bridge_temp"
+        path="bridge_temp/" />
+</paths>

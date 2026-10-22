@@ -1,0 +1,130 @@
+<resources>
+    <string name="app_name">RBstudio</string>
+
+    <!-- الشاشة الرئيسية -->
+    <string name="home_title">RBstudio</string>
+    <string name="home_subtitle">تصفّح بيانات جهازك القديم من جهازك الجديد</string>
+    <string name="mode_host">جهاز مُضيف (القديم)</string>
+    <string name="mode_host_desc">يشارك الصور والملفات والرسائل ويبقى متصلاً في الخلفية</string>
+    <string name="mode_controller">جهاز تحكم (الجديد)</string>
+    <string name="mode_controller_desc">يتصل بالجهاز المضيف ويستعرض بياناته عن بُعد</string>
+    <string name="mode_web_controller">لوحة الويب المدمجة (Web Dashboard)</string>
+    <string name="mode_web_controller_desc">استخدام واجهة الويب المتقدمة مباشرة داخل التطبيق كمتصفح ومراقب مدمج</string>
+    <string name="web_dashboard_title">لوحة الويب المدمجة</string>
+    <string name="reload_web_dashboard">إعادة تحميل</string>
+    <string name="settings">الإعدادات</string>
+    <string name="server_address">عنوان خادم الإشارات</string>
+    <string name="server_address_hint">ws://example.com:8080</string>
+    <string name="device_name">اسم هذا الجهاز</string>
+    <string name="device_name_hint">مثال: هاتف قديم</string>
+    <string name="auto_start_host">تشغيل المضيف تلقائياً بعد الإقلاع</string>
+    <string name="save">حفظ</string>
+    <string name="next">التالي</string>
+    <string name="continue_button">متابعة</string>
+
+    <!-- حالة الاتصال -->
+    <string name="state_disconnected">غير متصل</string>
+    <string name="state_connecting">جارٍ الاتصال…</string>
+    <string name="state_connected">متصل</string>
+    <string name="state_failed">فشل الاتصال</string>
+    <string name="peer_idle">لا يوجد اتصال بين الجهازين</string>
+    <string name="peer_connecting">جارٍ إنشاء قناة الاتصال…</string>
+    <string name="peer_connected">الاتصال المباشر جاهز</string>
+    <string name="peer_failed">انقطعت قناة الاتصال</string>
+
+    <!-- شاشة المضيف -->
+    <string name="host_title">وضع الجهاز المضيف</string>
+    <string name="host_running">المضيف يعمل</string>
+    <string name="host_stopped">المضيف متوقف</string>
+    <string name="start_host">بدء المضيف</string>
+    <string name="stop_host">إيقاف المضيف</string>
+    <string name="host_notification_title">جسر عن بعد — المضيف يعمل</string>
+    <string name="host_notification_text">الجهاز متاح للاتصال من جهاز التحكم</string>
+    <string name="host_channel_name">خدمة المضيف</string>
+    <string name="grant_notification_access">الوصول للإشعارات</string>
+    <string name="grant_notification_access_desc">تفعيل مستمع الإشعارات لرصد إشعارات النظام والتطبيقات</string>
+    <string name="grant_permissions">أذونات البيانات الأساسية</string>
+    <string name="permissions_desc">الصور، الفيديو، الصوت، الرسائل، جهات الاتصال، سجل المكالمات</string>
+    <string name="grant_camera_mic">أذونات الكاميرا والميكروفون</string>
+    <string name="camera_mic_desc">مطلوبة للبث الحي المباشر بالفيديو والصوت عبر الخادم</string>
+    <string name="grant_battery_opt">استثناء تحسين البطارية (العمل بالخلفية)</string>
+    <string name="battery_opt_desc">ضمان استمرار عمل خدمة المضيف بثبات في الخلفية دون انقطاع</string>
+    <string name="grant_all_files">الوصول لكافة ملفات وذاكرة الهاتف</string>
+    <string name="all_files_desc">استكشاف مجلدات وذاكرة الجهاز بالكامل (Android 11+)</string>
+    <string name="live_streaming_section">البث المباشر (الكاميرا والميكروفون)</string>
+    <string name="start_camera_stream">بدء بث الكاميرا</string>
+    <string name="stop_camera_stream">إيقاف بث الكاميرا</string>
+    <string name="switch_camera_lens">تبديل الكاميرا (أمامية / خلفية)</string>
+    <string name="camera_front">كاميرا أمامية</string>
+    <string name="camera_back">كاميرا خلفية</string>
+    <string name="mic_enabled">الميكروفون: مفعّل</string>
+    <string name="mic_muted">الميكروفون: مكتوم</string>
+    <string name="permission_granted">ممنوح</string>
+    <string name="permission_pending">اضغط للمنح</string>
+
+    <!-- شاشة التحكم -->
+    <string name="controller_title">وضع جهاز التحكم</string>
+    <string name="available_hosts">الأجهزة المضيفة المتاحة</string>
+    <string name="no_hosts">لا توجد أجهزة مضيفة متصلة</string>
+    <string name="connect">اتصال</string>
+    <string name="disconnect">قطع الاتصال</string>
+    <string name="scanning">جارٍ البحث عن الأجهزة…</string>
+
+    <!-- لوحة التحكم -->
+    <string name="dashboard_title">بيانات الجهاز البعيد</string>
+    <string name="category_files">الملفات والوسائط</string>
+    <string name="category_messages">الرسائل</string>
+    <string name="category_contacts">جهات الاتصال والمكالمات</string>
+    <string name="category_notifications">الإشعارات</string>
+    <string name="category_device">معلومات الجهاز</string>
+    <string name="category_downloads">الملفات المحفوظة</string>
+
+    <!-- المستكشف -->
+    <string name="bucket_images">الصور</string>
+    <string name="bucket_videos">الفيديو</string>
+    <string name="bucket_audio">الصوت</string>
+    <string name="bucket_downloads">التنزيلات</string>
+    <string name="no_files">لا توجد ملفات</string>
+    <string name="loading">جارٍ التحميل…</string>
+    <string name="open_file">فتح</string>
+    <string name="save_file">حفظ بالجهاز</string>
+    <string name="saved">تم الحفظ</string>
+
+    <!-- الرسائل -->
+    <string name="messages_title">الرسائل النصية</string>
+    <string name="no_messages">لا توجد رسائل</string>
+    <string name="sms_received">واردة</string>
+    <string name="sms_sent">صادرة</string>
+    <string name="unknown_sender">رقم غير معروف</string>
+
+    <!-- جهات الاتصال -->
+    <string name="contacts_title">جهات الاتصال</string>
+    <string name="calls_title">سجل المكالمات</string>
+    <string name="no_contacts">لا توجد جهات اتصال</string>
+    <string name="no_calls">لا يوجد سجل مكالمات</string>
+    <string name="call_incoming">واردة</string>
+    <string name="call_outgoing">صادرة</string>
+    <string name="call_missed">فائتة</string>
+    <string name="call_rejected">مرفوضة</string>
+
+    <!-- الإشعارات -->
+    <string name="notifications_title">الإشعارات</string>
+    <string name="no_notifications">لا توجد إشعارات</string>
+
+    <!-- معلومات الجهاز -->
+    <string name="device_info_title">معلومات الجهاز</string>
+    <string name="battery">البطارية</string>
+    <string name="storage">التخزين</string>
+    <string name="android_version">إصدار أندرويد</string>
+    <string name="free_space">مساحة فارغة</string>
+
+    <!-- التنزيلات -->
+    <string name="downloads_title">الملفات المحفوظة محلياً</string>
+    <string name="no_downloads">لم يتم حفظ أي ملف بعد</string>
+    <string name="delete">حذف</string>
+
+    <!-- أخطاء -->
+    <string name="error_not_connected">الاتصال غير جاهز بعد</string>
+    <string name="error_generic">حدث خطأ غير متوقع</string>
+    <string name="error_download">تعذّر تنزيل الملف</string>
+</resources>
