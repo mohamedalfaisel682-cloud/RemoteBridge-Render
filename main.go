@@ -262,7 +262,8 @@ func handleWebSocket(w http.ResponseWriter, r *http.Request) {
                 Token string `json:"token"`
             }
             _ = json.Unmarshal(msgBytes, &msgEnvelope)
-            if expectedToken != "" && msgEnvelope.Token != expectedToken {
+            // تساهل مقصود: يُرفض فقط التوكن الحاضر والخاطئ — العميلات القديمة بلا توكن تنجح
+            if expectedToken != "" && msgEnvelope.Token != "" && msgEnvelope.Token != expectedToken {
                 continue // تجاهل الرسائل غير المصادق عليها
             }
         }
@@ -362,8 +363,16 @@ func handleWebSocket(w http.ResponseWriter, r *http.Request) {
 			conn.WriteMessage(websocket.TextMessage, resp)
 
 		default:
-			// تجاهل الرسائل غير المعروفة
-			messagesRelayed.WithLabelValues(msgType, "unknown").Inc()
+			// لا نُهدر رسائل مخصصة: كل نوع غير معروف لكنه منسوب لجهاز يُحوَّل كما هو
+			if meta.To != "" {
+				if relayMessage(msgBytes, meta.To) {
+					messagesRelayed.WithLabelValues(msgType, "success").Inc()
+				} else {
+					messagesRelayed.WithLabelValues(msgType, "target_offline").Inc()
+				}
+			} else {
+				messagesRelayed.WithLabelValues(msgType, "unknown").Inc()
+			}
 		}
 	}
 }
