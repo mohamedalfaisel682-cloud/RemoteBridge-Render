@@ -273,10 +273,19 @@
             deviceName: "RBstudio Web Controller",
             targetDeviceId: "",
             stunServer: "stun:stun.l.google.com:19302",
-            connectionProfile: "RENDER_ONLY"
+            connectionProfile: "HYBRID"
         };
 
         let appConfig = JSON.parse(localStorage.getItem('remotebridge_config')) || DEFAULT_CONFIG;
+
+        // ترقية لمرة واحدة: الافتراضي القديم كان RENDER_ONLY — نرقّيه إلى HYBRID (P2P + Render)
+        if (!localStorage.getItem('remotebridge_profile_migrated_v2')) {
+            if (appConfig.connectionProfile === 'RENDER_ONLY') {
+                appConfig.connectionProfile = 'HYBRID';
+                try { localStorage.setItem('remotebridge_config', JSON.stringify(appConfig)); } catch (e) {}
+            }
+            try { localStorage.setItem('remotebridge_profile_migrated_v2', '1'); } catch (e) {}
+        }
         if (!appConfig.serverUrl || appConfig.serverUrl.includes("remotebridge.onrender.com")) {
             appConfig.serverUrl = PRESETS.render;
             try { localStorage.setItem('remotebridge_config', JSON.stringify(appConfig)); } catch (e) {}

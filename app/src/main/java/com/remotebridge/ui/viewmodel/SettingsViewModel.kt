@@ -24,7 +24,7 @@ class SettingsViewModel(
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "")
 
     val connectionProfile: StateFlow<String> = repository.connectionProfile
-        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "RENDER_ONLY")
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "HYBRID")
 
     val deviceName: StateFlow<String> = repository.deviceName
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), "")
@@ -35,7 +35,7 @@ class SettingsViewModel(
     /**
      * يحفظ الإعدادات تلقائياً في الخلفية.
      */
-    fun saveSettings(serverUrl: String, deviceName: String, stunServer: String = "stun:stun.l.google.com:19302", profile: String = "RENDER_ONLY") {
+    fun saveSettings(serverUrl: String, deviceName: String, stunServer: String = "stun:stun.l.google.com:19302", profile: String = "HYBRID") {
         viewModelScope.launch {
             repository.setServerUrl(serverUrl)
             repository.setDeviceName(deviceName)

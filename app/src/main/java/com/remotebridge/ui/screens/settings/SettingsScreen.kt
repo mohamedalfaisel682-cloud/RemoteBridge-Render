@@ -73,14 +73,14 @@ fun SettingsScreen(
 
     var urlInput by remember { mutableStateOf("") }
     var stunInput by remember { mutableStateOf("") }
-    var profileInput by remember { mutableStateOf("RENDER_ONLY") }
+    var profileInput by remember { mutableStateOf("HYBRID") }
     var nameInput by remember { mutableStateOf("") }
     var isSearchingLocal by remember { mutableStateOf(false) }
 
     LaunchedEffect(serverUrl, stunServer, connectionProfile, deviceName) {
         urlInput = serverUrl.ifBlank { SettingsRepository.DEFAULT_RENDER_URL }
         stunInput = stunServer.ifBlank { SettingsRepository.DEFAULT_STUN_SERVER }
-        profileInput = connectionProfile.ifBlank { "RENDER_ONLY" }
+        profileInput = connectionProfile.ifBlank { "HYBRID" }
         nameInput = deviceName.ifBlank { SettingsRepository.DEFAULT_DEVICE_NAME }
     }
 

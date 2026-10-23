@@ -36,7 +36,7 @@ class SettingsRepository(private val context: Context) {
         const val DEFAULT_LOCAL_URL = "ws://10.0.2.2:10000/ws"
         const val DEFAULT_SERVER_URL = DEFAULT_RENDER_URL
         const val DEFAULT_STUN_SERVER = "stun:stun.l.google.com:19302"
-        const val DEFAULT_PROFILE = "RENDER_ONLY"
+        const val DEFAULT_PROFILE = "HYBRID"
         const val DEFAULT_DEVICE_NAME = "Galaxy Note 20 Ultra"
     }
 
