@@ -36,6 +36,112 @@
         }
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* ===== Phase 2: شارات العدادات داخل دوائر ===== */
+        .tab-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 17px;
+            height: 17px;
+            padding: 0 4px;
+            border-radius: 999px;
+            background: #e11d48;
+            color: #fff;
+            font-size: 9.5px;
+            font-weight: 800;
+            line-height: 1;
+            border: 1.5px solid rgba(255,255,255,0.35);
+            box-shadow: 0 0 0 1px rgba(15,23,42,0.85);
+        }
+        .tab-badge[hidden] { display: none; }
+
+        /* ===== Phase 2: أيقونة مكبر الصوت في نافذة البث ===== */
+        @keyframes speaker-live-flash {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(16,185,129,0.55), 0 0 14px 2px rgba(16,185,129,0.45); }
+            50%      { box-shadow: 0 0 0 6px rgba(16,185,129,0.10), 0 0 24px 6px rgba(16,185,129,0.55); }
+        }
+        .speaker-btn-on {
+            background: rgba(16,185,129,0.25) !important;
+            border: 1.5px solid rgba(16,185,129,0.9) !important;
+            color: #6ee7b7 !important;
+            animation: speaker-live-flash 1.4s ease-in-out infinite;
+        }
+        .speaker-btn-off {
+            background: rgba(225,29,72,0.22) !important;
+            border: 1.5px solid rgba(244,63,94,0.9) !important;
+            color: #fda4af !important;
+        }
+        .speaker-btn-off .speaker-slash { display: block; }
+        .speaker-slash { display: none; }
+
+        /* ===== Phase 2: أوضاع عرض القوائم ===== */
+        .vm-btn { transition: all .2s; }
+        .vm-btn.vm-active {
+            background: rgba(16,185,129,0.25) !important;
+            border-color: rgba(16,185,129,0.65) !important;
+            color: #6ee7b7 !important;
+        }
+        .files-flex-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(92px, 1fr)); gap: 8px; }
+        .files-flex-grid.vm-medium { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+        .files-flex-grid.vm-large { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+        .file-thumb-card {
+            background: rgba(15,23,42,0.85);
+            border: 1px solid rgba(51,65,85,0.9);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            transition: border-color .2s, transform .15s;
+            cursor: pointer;
+        }
+        .file-thumb-card:hover { border-color: rgba(16,185,129,0.8); transform: translateY(-2px); }
+        .file-thumb-card.selected { border-color: rgba(16,185,129,1); box-shadow: 0 0 0 2px rgba(16,185,129,0.35); }
+        .file-thumb-img { width: 100%; aspect-ratio: 1/1; object-fit: cover; background: #0b1220; }
+        .file-thumb-name { font-size: 10px; color: #cbd5e1; padding: 4px 6px 6px; direction: ltr; text-align: center; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .file-thumb-select { position: absolute; top: 6px; right: 6px; width: 16px; height: 16px; accent-color: #10b981; }
+
+        /* ===== Phase 2: نافذة الدردشة/المجموعة ===== */
+        .overlay-window {
+            position: fixed;
+            inset: 0;
+            z-index: 70;
+            background: rgba(2,6,23,0.78);
+            backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+        }
+        .chat-window {
+            width: 100%;
+            max-width: 640px;
+            height: min(88vh, 760px);
+            background: linear-gradient(180deg, #0f172a 0%, #0b1220 100%);
+            border: 1px solid rgba(51,65,85,0.9);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.6);
+        }
+        .chat-header { display:flex; align-items:center; justify-content:space-between; padding: 12px 14px; border-bottom:1px solid rgba(51,65,85,0.8); background: rgba(15,23,42,0.9); }
+        .chat-body { flex: 1; overflow-y: auto; padding: 14px 12px; display: flex; flex-direction: column; gap: 10px; background-image: radial-gradient(rgba(148,163,184,0.05) 1px, transparent 1px); background-size: 18px 18px; }
+        .bubble-wrap { display: flex; width: 100%; }
+        .bubble-wrap.in  { justify-content: flex-start; }  /* واردة: يمين في الواجهة العربية */
+        .bubble-wrap.out { justify-content: flex-end; }    /* صادرة: يسار */
+        .bubble {
+            max-width: 82%;
+            padding: 8px 12px;
+            border-radius: 14px;
+            font-size: 13px;
+            line-height: 1.65;
+            word-break: break-word;
+            white-space: pre-wrap;
+        }
+        .bubble.in  { background: rgba(51,65,85,0.55); border: 1px solid rgba(71,85,105,0.8); color: #e2e8f0; border-start-start-radius: 4px; }
+        .bubble.out { background: rgba(16,185,129,0.22); border: 1px solid rgba(16,185,129,0.55); color: #d1fae5; border-start-end-radius: 4px; }
+        .bubble-time { font-size: 9.5px; opacity: .75; margin-top: 4px; text-align: left; font-family: monospace; }
+        .chat-input-row { display:flex; gap:8px; padding: 10px 12px; border-top: 1px solid rgba(51,65,85,0.8); background: rgba(15,23,42,0.9); }
     </style>
 </head>
 <body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col custom-scrollbar selection:bg-emerald-500 selection:text-slate-950 overflow-x-hidden">
@@ -79,12 +185,12 @@
     <!-- Mobile Horizontal Tabs Navigation (Visually Optimized for Phones) -->
     <div class="md:hidden bg-slate-900/95 border-b border-slate-800 px-2 py-2 overflow-x-auto no-scrollbar flex items-center gap-1.5 sticky top-[53px] z-30 shadow-md">
         <button onclick="switchTab('dashboard')" class="tab-btn-mobile px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap bg-emerald-600/20 text-emerald-400 border border-emerald-500/30">📊 الرئيسية</button>
-        <button onclick="switchTab('files')" class="tab-btn-mobile px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap text-slate-300 bg-slate-800/60">📁 الملفات والذاكرة</button>
+        <button onclick="switchTab('files')" class="tab-btn-mobile px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap text-slate-300 bg-slate-800/60">📁 الملفات والذاكرة <span id="badge-files-m" class="tab-badge" hidden>0</span></button>
         <button onclick="switchTab('camera')" class="tab-btn-mobile px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap text-slate-300 bg-slate-800/60">📹 البث الحي</button>
-        <button onclick="switchTab('contacts')" class="tab-btn-mobile px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap text-slate-300 bg-slate-800/60">📇 الأسماء</button>
-        <button onclick="switchTab('sms')" class="tab-btn-mobile px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap text-slate-300 bg-slate-800/60">💬 الرسائل</button>
-        <button onclick="switchTab('calls')" class="tab-btn-mobile px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap text-slate-300 bg-slate-800/60">📞 المكالمات</button>
-        <button onclick="switchTab('notifications')" class="tab-btn-mobile px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap text-slate-300 bg-slate-800/60">🔔 الإشعارات</button>
+        <button onclick="switchTab('contacts')" class="tab-btn-mobile px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap text-slate-300 bg-slate-800/60">📇 الأسماء <span id="badge-contacts-m" class="tab-badge" hidden>0</span></button>
+        <button onclick="switchTab('sms')" class="tab-btn-mobile px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap text-slate-300 bg-slate-800/60">💬 الرسائل <span id="badge-sms-m" class="tab-badge" hidden>0</span></button>
+        <button onclick="switchTab('calls')" class="tab-btn-mobile px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap text-slate-300 bg-slate-800/60">📞 المكالمات <span id="badge-calls-m" class="tab-badge" hidden>0</span></button>
+        <button onclick="switchTab('notifications')" class="tab-btn-mobile px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap text-slate-300 bg-slate-800/60">🔔 الإشعارات <span id="badge-notifications-m" class="tab-badge" hidden>0</span></button>
         <button onclick="switchTab('settings')" class="tab-btn-mobile px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap text-slate-300 bg-slate-800/60">⚙️ الإعدادات</button>
     </div>
 
@@ -100,21 +206,26 @@
                 </button>
                 <button onclick="switchTab('files')" class="tab-btn w-full text-right px-3.5 py-2.5 rounded-xl hover:bg-slate-800/80 text-slate-300 font-medium transition flex items-center justify-between group">
                     <span class="flex items-center gap-2.5 text-xs">📁 مستكشف ملفات وذاكرة الهاتف</span>
+                    <span id="badge-files" class="tab-badge" hidden>0</span>
                 </button>
                 <button onclick="switchTab('camera')" class="tab-btn w-full text-right px-3.5 py-2.5 rounded-xl hover:bg-slate-800/80 text-slate-300 font-medium transition flex items-center justify-between group">
                     <span class="flex items-center gap-2.5 text-xs">📹 البث الحي للكاميرا والصوت</span>
                 </button>
                 <button onclick="switchTab('contacts')" class="tab-btn w-full text-right px-3.5 py-2.5 rounded-xl hover:bg-slate-800/80 text-slate-300 font-medium transition flex items-center justify-between group">
                     <span class="flex items-center gap-2.5 text-xs">📇 الأسماء وجهات الاتصال</span>
+                    <span id="badge-contacts" class="tab-badge" hidden>0</span>
                 </button>
                 <button onclick="switchTab('sms')" class="tab-btn w-full text-right px-3.5 py-2.5 rounded-xl hover:bg-slate-800/80 text-slate-300 font-medium transition flex items-center justify-between group">
                     <span class="flex items-center gap-2.5 text-xs">💬 الرسائل القصيرة (SMS)</span>
+                    <span id="badge-sms" class="tab-badge" hidden>0</span>
                 </button>
                 <button onclick="switchTab('calls')" class="tab-btn w-full text-right px-3.5 py-2.5 rounded-xl hover:bg-slate-800/80 text-slate-300 font-medium transition flex items-center justify-between group">
                     <span class="flex items-center gap-2.5 text-xs">📞 سجل المكالمات</span>
+                    <span id="badge-calls" class="tab-badge" hidden>0</span>
                 </button>
                 <button onclick="switchTab('notifications')" class="tab-btn w-full text-right px-3.5 py-2.5 rounded-xl hover:bg-slate-800/80 text-slate-300 font-medium transition flex items-center justify-between group">
                     <span class="flex items-center gap-2.5 text-xs">🔔 الإشعارات الحية</span>
+                    <span id="badge-notifications" class="tab-badge" hidden>0</span>
                 </button>
                 <button onclick="switchTab('settings')" class="tab-btn w-full text-right px-3.5 py-2.5 rounded-xl hover:bg-slate-800/80 text-slate-300 font-medium transition flex items-center justify-between group">
                     <span class="flex items-center gap-2.5 text-xs">⚙️ الإعدادات والبروفايلات</span>
@@ -452,6 +563,9 @@
                 case "host_offline":
                     showToast(`انقطع المضيف: ${msg.deviceId}`, "warning");
                     refreshHostList();
+                    break;
+                case "push_event":
+                    handlePushEvent(msg);
                     break;
                 case "pong":
                     const latency = Date.now() - lastPingTime;
@@ -1121,6 +1235,10 @@
                         return;
                     }
                     const resp = JSON.parse(raw);
+                    if (resp.type === 'push_event') {
+                        handlePushEvent(resp);
+                        return;
+                    }
                     handleRPCResponse(resp);
                 } catch (e) {
                     console.error("DataChannel JSON decode error:", e);
@@ -1130,6 +1248,158 @@
 
         // خريطة للطلبات المعلقة مع timeout
         const pendingRpcRequests = new Map();
+
+        // ============================================================
+        //                 Phase 2 — أدوات مشتركة جديدة
+        // ============================================================
+
+        // 1) عدّادات "لم تتم معاينته بعد" (شارات حمراء داخل دوائر)
+        const unreadViews = { files: 0, contacts: 0, sms: 0, calls: 0, notifications: 0 };
+        const seenCounts  = { files: 0, contacts: 0, sms: 0, calls: 0, notifications: 0 };
+
+        function getTabCount(tab) {
+            if (tab === 'files') return filesData.length;
+            if (tab === 'contacts') return contactsData.length;
+            if (tab === 'sms') return smsData.length;
+            if (tab === 'calls') return callsData.length;
+            if (tab === 'notifications') return notificationsData.length;
+            return 0;
+        }
+
+        function refreshAllBadges() {
+            ['files', 'contacts', 'sms', 'calls', 'notifications'].forEach(tab => {
+                const desktop = document.getElementById("badge-" + tab);
+                const mobile = document.getElementById("badge-" + tab + "-m");
+                const extra = getTabCount(tab) - seenCounts[tab];
+                const n = Math.max(0, unreadViews[tab] + (extra > 0 ? extra : 0));
+                if (desktop) { desktop.textContent = String(n); desktop.hidden = n === 0; }
+                if (mobile)  { mobile.textContent = String(n); mobile.hidden = n === 0; }
+                unreadViews[tab] = 0; // يُحتسب مرة واحدة عند وصول كل دفعة
+            });
+        }
+
+        function markTabSeen(tab) {
+            seenCounts[tab] = getTabCount(tab);
+            refreshAllBadges();
+        }
+
+        function bumpUnread(tab, by = 1) {
+            if (activeTab === tab) { seenCounts[tab] = getTabCount(tab); return; }
+            unreadViews[tab] += by;
+            refreshAllBadges();
+        }
+
+        // 2) أوضاع عرض القوائم (تفاصيل / صغير / متوسط / كبير)
+        let listModes = { files: 'details', contacts: 'details', sms: 'threads', calls: 'details', notifications: 'groups' };
+        try {
+            const savedModes = JSON.parse(localStorage.getItem('remotebridge_listmodes_v1'));
+            if (savedModes) listModes = Object.assign(listModes, savedModes);
+        } catch (_) {}
+
+        function setListMode(tab, mode) {
+            listModes[tab] = mode;
+            try { localStorage.setItem('remotebridge_listmodes_v1', JSON.stringify(listModes)); } catch (_) {}
+            if (tab === 'files') applyFilesFilterAndSort();
+            else if (tab === 'sms') applySmsFilterAndSort();
+            else if (tab === 'contacts') applyContactsFilterAndSort();
+            else if (tab === 'calls') applyCallFilters();
+            else if (tab === 'notifications') applyNotifFilters();
+        }
+
+        function renderModeButtons(tab, extraButtons = '') {
+            const modes = tab === 'sms' || tab === 'notifications'
+                ? [{ k: tab === 'sms' ? 'threads' : 'groups', l: '🗂️ مُجمّع' }, { k: 'small', l: 'صغير' }, { k: 'medium', l: 'متوسط' }, { k: 'large', l: 'كبير' }, { k: 'details', l: 'تفاصيل' }]
+                : [{ k: 'small', l: 'صغير' }, { k: 'medium', l: 'متوسط' }, { k: 'large', l: 'كبير' }, { k: 'details', l: 'تفاصيل' }];
+            return `
+                <div class="flex flex-wrap items-center gap-1 col-span-2 sm:col-span-4 bg-slate-950/70 border border-slate-800 rounded-lg px-2 py-1.5">
+                    <span class="text-[10px] text-slate-500 font-bold ml-1">نمط العرض:</span>
+                    ${modes.map(m => `<button onclick="setListMode('${tab}', '${m.k}')" class="vm-btn ${tab === 'files' && (m.k === 'small' || m.k === 'medium' || m.k === 'large') ? 'fm-file-grid' : ''} text-[10px] font-bold px-2 py-1 rounded-md bg-slate-800 border border-slate-700 text-slate-300 hover:bg-slate-700 ${listModes[tab] === m.k ? 'vm-active' : ''}">${m.l}</button>`).join('')}
+                    ${extraButtons}
+                </div>
+            `;
+        }
+
+        // 3) دمج أسماء جهات الاتصال (يُستخدم للرسائل والمكالمات)
+        function normNum(n) { return String(n || '').replace(/[^\d+]/g, '').replace(/^\+/, ''); }
+
+        function contactNameMap() {
+            const map = {};
+            contactsData.forEach(c => {
+                const display = c.displayName || '';
+                (c.phoneNumbers || []).forEach(p => {
+                    const key = normNum(p);
+                    if (key) map[key] = display;
+                });
+            });
+            return map;
+        }
+
+        function resolveContactName(number) {
+            if (!number) return null;
+            const n = normNum(number);
+            if (!n) return null;
+            const map = contactNameMap();
+            if (map[n]) return map[n];
+            const tail = n.slice(-7);
+            if (tail) {
+                for (const k in map) { if (k.endsWith(tail)) return map[k]; }
+            }
+            return null;
+        }
+
+        // 4) الاسم الصياغي للتطبيقات في الإشعارات
+        const packageNameFriendly = {
+            'com.whatsapp': ' WhatsApp', 'com.whatsapp.w4b': ' WhatsApp Business',
+            'com.google.android.gm': ' Gmail', 'com.android.mms': ' رسائل النظام',
+            'com.google.android.apps.messaging': ' Messages',
+            'com.facebook.orca': ' Messenger', 'com.facebook.katana': ' Facebook',
+            'com.instagram.android': ' Instagram', 'com.twitter.android': ' Twitter',
+            'com.android.phone': ' الهاتف', 'com.android.dialer': ' الهاتف',
+            'com.samsung.android.messaging': ' Samsung Messages',
+            'com.samsung.android.dialer': ' Samsung Phone',
+            'com.android.vending': ' Google Play', 'com.android.systemui': ' النظام',
+            'com.sec.android.app.launcher': ' الواجهة'
+        };
+
+        // 5) ثَبَنِ (Cache) مصغرات الملفات الحقيقية
+        const fileThumbnailCache = new Map();
+        let fileThumbTimer = null;
+
+        function requestFileThumbnail(f) {
+            if (fileThumbnailCache.has(f.id)) {
+                const img = document.getElementById('thumb-img-' + f.id);
+                if (img) img.src = fileThumbnailCache.get(f.id);
+                return;
+            }
+            if (fileThumbnailCache.has('r' + f.id)) return; // طلب جارٍ
+            fileThumbnailCache.set('r' + f.id, true);
+            clearTimeout(f._thumbTimer || null);
+            f._thumbTimer = setTimeout(() => {
+                sendRPCCommand('file_thumbnail', { id: f.id, name: f.name, mimeType: f.mimeType, path: (currentExplorerPath || '/') === '/' ? ('/' + f.name) : (currentExplorerPath + f.name) }, { timeout: 8000, retries: 0 })
+                    .then(data => {
+                        fileThumbnailCache.delete('r' + f.id);
+                        if (data && (data.thumbnail || data.dataUrl)) {
+                            const src = data.thumbnail || data.dataUrl;
+                            fileThumbnailCache.set(f.id, src);
+                            const img = document.getElementById('thumb-img-' + f.id);
+                            if (img) img.src = src;
+                            if (img) img.onerror = () => { img.src = ''; };
+                        }
+                    })
+                    .catch(() => { fileThumbnailCache.delete('r' + f.id); });
+            }, 150);
+        }
+
+        function isDirectory(f) {
+            const isDir = f.isDir === true || f.isDir === 1 ||
+                f.bucket === 'folder' || f.bucket === 'directories' ||
+                f.mimeType === 'inode/directory' || f.mimeType === 'vnd.android.document/directory' ||
+                f.mimeType === 'directory';
+            return isDir;
+        }
+
+        // 6) استعلام مصغر للملف عبر الـ RPC المباشر من القائمة
+        function streamAudioEnabled() { return streamState && streamState.audioEnabled === true; }
 
         function sendRPCCommand(command, params = null, options = {}) {
             const {
@@ -1207,13 +1477,15 @@
             });
         }
 
+        // === نسخة موحّدة نهائية من معالج الردود (كانت موجودة بنسختين مكررتين) ===
         function handleRPCResponse(resp) {
             if (!resp) {
                 showToast("لا توجد استجابة من المضيف", "warning");
                 return;
             }
 
-            // معالجة الردود من الطلبات المعلقة (مع retry)
+            // 0) فكّ الوعود المعلقة (لا نعيد الإرجاع مبكراً — يُتابع التوجيه بعدها
+            //    لأن هناك مسارات تعتمد على التحديث المباشر في اللوحة)
             const pending = pendingRpcRequests.get(resp.id);
             if (pending) {
                 clearTimeout(pending.timer);
@@ -1221,119 +1493,10 @@
                 if (!resp.ok) {
                     pending.reject(new Error(resp.error || "فشل تنفيذ الأمر"));
                 } else {
-                    pending.resolve(resp.data);
+                    pending.resolve(resp.data || {});
                 }
-                return;
             }
 
-            if (!resp.ok) {
-                showToast("رد المضيف: " + (resp.error || "خطأ في تنفيذ الأمر"), "warning");
-                return;
-            }
-            const data = resp.data || {};
-            const cmd = data.cmd || resp.cmd;
-
-            // 1) DEVICE_INFO Response
-            if (cmd === 'device_info' || data.deviceName || data.batteryLevel !== undefined) {
-                updateDashboardCards(data);
-                showToast("تم جلب وقراءة بيانات الهاتف المضيف الحية بنجاح!", "success");
-                return;
-            }
-
-            // 2) Items array responses (Contacts, SMS, Calls, Notifications, Files)
-            if (data.items !== undefined && Array.isArray(data.items)) {
-                let targetType = activeTab;
-
-                if (cmd === 'contacts_list') {
-                    targetType = 'contacts';
-                } else if (cmd === 'sms_list') {
-                    targetType = 'sms';
-                } else if (cmd === 'calls_list') {
-                    targetType = 'calls';
-                } else if (cmd === 'notifications_list') {
-                    targetType = 'notifications';
-                } else if (cmd === 'file_list' || cmd === 'storage_explore') {
-                    targetType = 'files';
-                } else if (data.items.length > 0) {
-                    const sample = data.items[0];
-                    if (sample.phoneNumber !== undefined || sample.displayName !== undefined || sample.phoneNumbers !== undefined) {
-                        targetType = 'contacts';
-                    } else if (sample.body !== undefined || sample.address !== undefined) {
-                        targetType = 'sms';
-                    } else if (sample.number !== undefined || sample.durationSec !== undefined || (sample.type !== undefined && sample.date !== undefined && sample.id !== undefined)) {
-                        targetType = 'calls';
-                    } else if (sample.packageName !== undefined || sample.postTime !== undefined) {
-                        targetType = 'notifications';
-                    } else if (sample.mimeType !== undefined || sample.isDir !== undefined || data.currentPath !== undefined) {
-                        targetType = 'files';
-                    }
-                } else if (data.currentPath !== undefined) {
-                    targetType = 'files';
-                }
-
-                if (targetType === 'files') {
-                    filesData = data.items;
-                    if (data.currentPath) currentExplorerPath = data.currentPath;
-                    if (activeTab === 'files') applyFilesFilterAndSort();
-                } else if (targetType === 'contacts') {
-                    contactsData = data.items;
-                    if (activeTab === 'contacts') applyContactsFilterAndSort();
-                } else if (targetType === 'sms') {
-                    smsData = data.items;
-                    if (activeTab === 'sms') applySmsFilterAndSort();
-                } else if (targetType === 'calls') {
-                    callsData = data.items;
-                    if (activeTab === 'calls') applyCallFilters();
-                } else if (targetType === 'notifications') {
-                    notificationsData = data.items;
-                    if (activeTab === 'notifications') applyNotifFilters();
-                }
-                const countMsg = data.items.length > 0 ? ` (${data.items.length} عنصر)` : " (القائمة فارغة أو بانتظار إذن الوصول)";
-                showToast("تم جلب وتحديث القائمة الحية بنجاح!" + countMsg, "success");
-                return;
-            }
-
-            // 3) Streaming Responses
-            if (data.started !== undefined || data.stopped !== undefined || data.switched !== undefined || data.audioEnabled !== undefined || (cmd && cmd.includes('stream'))) {
-                if (data.started) {
-                    streamState.active = true;
-                    if (data.mode === 'audio') {
-                        streamState.audioOnly = true;
-                        streamState.mode = 'audio';
-                        showToast("تم بدء بث الصوت الحي (الميكروفون)!", "success");
-                    } else if (data.mode === 'screen') {
-                        streamState.audioOnly = false;
-                        streamState.mode = 'screen';
-                        showToast("تم بدء بث شاشة الهاتف الحية!", "success");
-                    } else {
-                        streamState.audioOnly = false;
-                        streamState.mode = 'camera';
-                        showToast("تم بدء بث الكاميرا والصوت المباشر!", "success");
-                    }
-
-                    setTimeout(() => {
-                        const targetInput = document.getElementById("target-device-id");
-                        const targetId = (targetInput && targetInput.value.trim()) || appConfig.targetDeviceId;
-                        if (targetId) createWebRTCOffer(targetId);
-                    }, 400);
-                } else if (data.stopped) {
-                    streamState.active = false;
-                    streamState.audioOnly = false;
-                    streamState.mode = 'none';
-                    showToast("تم إيقاف كافة وسائل البث المباشر", "info");
-                }
-
-                if (data.isFront !== undefined) streamState.isFront = data.isFront;
-                if (data.audioEnabled !== undefined) streamState.audioEnabled = data.audioEnabled;
-                if (activeTab === 'camera') renderCameraStreamView();
-            }
-        }
-
-        function handleRPCResponse(resp) {
-            if (!resp) {
-                showToast("لا توجد استجابة من المضيف", "warning");
-                return;
-            }
             if (!resp.ok) {
                 showToast("رد المضيف: " + (resp.error || "خطأ في تنفيذ الأمر"), "warning");
                 return;
@@ -1351,6 +1514,11 @@
                 return;
             }
 
+            // رد أمر غير معروف في التوجيه؟
+            if (data.permissionWarning !== undefined) {
+                showToast("تنبيه المضيف: " + data.permissionWarning, "warning");
+            }
+
             // 2) Items array responses (Contacts, SMS, Calls, Notifications, Files)
             if (data.items !== undefined && Array.isArray(data.items)) {
                 let targetType = activeTab;
@@ -1385,22 +1553,39 @@
                 if (targetType === 'files') {
                     filesData = data.items;
                     if (data.currentPath) currentExplorerPath = data.currentPath;
-                    if (activeTab === 'files') applyFilesFilterAndSort();
                 } else if (targetType === 'contacts') {
                     contactsData = data.items;
-                    if (activeTab === 'contacts') applyContactsFilterAndSort();
                 } else if (targetType === 'sms') {
                     smsData = data.items;
-                    if (activeTab === 'sms') applySmsFilterAndSort();
                 } else if (targetType === 'calls') {
                     callsData = data.items;
-                    if (activeTab === 'calls') applyCallFilters();
+                    if (cmd === 'calls_list' && data.permissionWarning) callsPermissionWarning = data.permissionWarning;
+                    else if (data.items.length > 0) callsPermissionWarning = "";
                 } else if (targetType === 'notifications') {
                     notificationsData = data.items;
-                    if (activeTab === 'notifications') applyNotifFilters();
                 }
-                const countMsg = data.items.length > 0 ? ` (${data.items.length} عنصر)` : " (القائمة فارغة أو بانتظار إذن الوصول)";
-                showToast("تم جلب وتحديث القائمة الحية بنجاح!" + countMsg, "success");
+
+                if (data.items.length > 0) {
+                    // الوصول حي: تبويب مفتوح = يُعالج أولياً؛ تبويب مغلق = شارة بعدّاد
+                    if (targetType === activeTab) markTabSeen(targetType); else bumpUnread(targetType, data.items.length);
+                }
+
+                if (targetType === 'files' || targetType === 'sms' || targetType === 'calls') {
+                    // الأسماء مطلوبة لعرض الرسائل/المكالمات بالاسم المحفوظ
+                    if (contactsData.length === 0 && targetType !== 'contacts') {
+                        sendRPCCommand('contacts_list', null, { timeout: 6000, retries: 0 }).catch(() => {});
+                    }
+                }
+
+                if (activeTab === targetType) {
+                    if (targetType === 'files') applyFilesFilterAndSort();
+                    else if (targetType === 'contacts') applyContactsFilterAndSort();
+                    else if (targetType === 'sms') applySmsFilterAndSort();
+                    else if (targetType === 'calls') applyCallFilters();
+                    else if (targetType === 'notifications') applyNotifFilters();
+                }
+                const countMsg = data.items.length > 0 ? ` (${data.items.length} عنصر)` : "";
+                if (countMsg) showToast("تم جلب وتحديث القائمة الحية بنجاح!" + countMsg, "success");
                 return;
             }
 
@@ -1411,16 +1596,21 @@
                     if (data.mode === 'audio') {
                         streamState.audioOnly = true;
                         streamState.mode = 'audio';
+                        streamState.audioEnabled = true;
                         showToast("تم بدء بث الصوت الحي (الميكروفون)!", "success");
                     } else if (data.mode === 'screen') {
                         streamState.audioOnly = false;
                         streamState.mode = 'screen';
+                        // السياسة الجديدة: الكتم الافتراضي لكل البث المرئي
+                        streamState.audioEnabled = data.audioEnabled === true;
                         showToast("تم بدء بث شاشة الهاتف الحية!", "success");
                     } else {
                         streamState.audioOnly = false;
                         streamState.mode = 'camera';
-                        showToast("تم بدء بث الكاميرا والصوت المباشر!", "success");
+                        streamState.audioEnabled = data.audioEnabled === true;
+                        showToast("تم بدء بث الكاميرا — الصوت مكتوم افتراضياً (انقر مكبر الصوت لتشغيله)", "info");
                     }
+                    applyStreamMuteToElements();
 
                     // Trigger WebRTC renegotiation offer so active tracks stream immediately
                     setTimeout(() => {
@@ -1437,7 +1627,9 @@
                 }
 
                 if (data.isFront !== undefined) streamState.isFront = data.isFront;
-                if (data.audioEnabled !== undefined) streamState.audioEnabled = data.audioEnabled;
+                if (data.switched) streamState.isFront = data.isFront === true;
+                if (data.audioEnabled !== undefined && !data.started) streamState.audioEnabled = data.audioEnabled === true;
+                applyStreamMuteToElements();
                 if (activeTab === 'camera') renderCameraStreamView();
             }
         }
@@ -1463,6 +1655,74 @@
             }
         }
 
+        // ============================================================
+        //            Phase 2 — الأحداث الحية الدافعة من الهاتف
+        // ============================================================
+        // الهاتف المضيف يدفع push_event فور وصول: إشعار / رسالة / مكالمة
+        function handlePushEvent(msg) {
+            try {
+                const kind = msg.kind || 'notification';
+                const payload = msg.payload || {};
+                const now = Date.now();
+
+                if (kind === 'notification') {
+                    const item = {
+                        id: (payload.id || ('live-' + now + '-' + Math.random().toString(36).slice(2, 7))) + '',
+                        packageName: payload.packageName || 'unknown',
+                        title: payload.title || '',
+                        text: payload.text || '',
+                        postTime: payload.postTime || now
+                    };
+                    notificationsData = [item].concat(notificationsData);
+                    if (activeTab === 'notifications') { applyNotifFilters(); markTabSeen('notifications'); }
+                    else { bumpUnread('notifications', 1); }
+                    const appName = packageNameFriendly[item.packageName] || item.packageName;
+                    showToast(`🔔 إشعار جديد من ${appName}: ${item.title || ''} ${item.text || ''}`.trim(), "info");
+                    refreshAllBadges();
+                    return;
+                }
+
+                if (kind === 'sms') {
+                    const item = {
+                        id: payload.id || Math.floor(now / 1000),
+                        threadId: payload.threadId || 0,
+                        address: payload.address || '',
+                        body: payload.body || '',
+                        date: payload.date || now,
+                        type: payload.type || 1,
+                        contactName: payload.contactName || null
+                    };
+                    smsData = [item].concat(smsData);
+                    if (activeTab === 'sms') { applySmsFilterAndSort(); markTabSeen('sms'); }
+                    else { bumpUnread('sms', 1); }
+                    const name = item.contactName || resolveContactName(item.address) || item.address || 'غير معروف';
+                    showToast(`💬 رسالة جديدة من ${name}: ${(item.body || '').slice(0, 60)}`, "info");
+                    refreshAllBadges();
+                    return;
+                }
+
+                if (kind === 'call') {
+                    const item = {
+                        id: payload.id || Math.floor(now / 1000),
+                        number: payload.number || '',
+                        date: payload.date || now,
+                        durationSec: payload.durationSec || 0,
+                        type: payload.type || 3  // 1 واردة / 2 صادرة / 3 فائتة
+                    };
+                    callsData = [item].concat(callsData);
+                    if (activeTab === 'calls') { applyCallFilters(); markTabSeen('calls'); }
+                    else { bumpUnread('calls', 1); }
+                    const badge = item.type === 1 ? 'مكالمة واردة' : item.type === 2 ? 'مكالمة صادرة' : 'مكالمة فائتة';
+                    const cname = resolveContactName(item.number) || item.number || 'غير معروف';
+                    showToast(`📞 ${badge} من ${cname}`, 'info');
+                    refreshAllBadges();
+                    return;
+                }
+            } catch (e) {
+                console.warn('push_event error:', e);
+            }
+        }
+
         // Tab Switching
         function switchTab(tab) {
             activeTab = tab;
@@ -1480,6 +1740,10 @@
             });
 
             const panel = document.getElementById("panel-content");
+            // أي دخول لتبويب قائمة = تسجيل المعاينة وإصفار شارته
+            if (['files', 'contacts', 'sms', 'calls', 'notifications'].includes(tab)) {
+                setTimeout(() => markTabSeen(tab), 0);
+            }
             if (tab === 'dashboard') {
                 panel.innerHTML = renderDashboardView();
                 setTimeout(() => updateWebRTCDiagnosticUI(), 50);
@@ -1495,9 +1759,11 @@
             } else if (tab === 'sms') {
                 renderSmsListView();
                 sendRPCCommand('sms_list');
+                if (contactsData.length === 0) sendRPCCommand('contacts_list', null, { timeout: 6000, retries: 0 }).catch(() => {});
             } else if (tab === 'calls') {
                 renderCallsListView();
                 sendRPCCommand('calls_list');
+                if (contactsData.length === 0) sendRPCCommand('contacts_list', null, { timeout: 6000, retries: 0 }).catch(() => {});
             } else if (tab === 'notifications') {
                 renderNotificationsListView();
                 sendRPCCommand('notifications_list');
@@ -1745,16 +2011,73 @@
         let fileSortBy = "name";
         let fileSortAsc = true;
 
+        // ============================================================
+        //   Phase 2 — التنقل في مستكشف الملفات + أوضاع العرض + مصغرات حقيقية
+        // ============================================================
+        let filesLoading = false;
+
+        // فتح مجلد جديد بالفعل = إعادة إرسال طلب الاستكشاف (هذا كان الخلل الأساسي)
+        function navigateExplorerPath(path) {
+            const p = path || '/';
+            currentExplorerPath = (p === '/' ? '/' : (p.endsWith('/') ? p : p + '/'));
+            filesLoading = true;
+            window.__filesViewItems = [];
+            renderFilesExplorerView();
+            sendRPCCommand('storage_explore', { path: currentExplorerPath }, { timeout: 12000 })
+                .catch(() => showToast("تعذر قراءة محتويات المجلد من الهاتف المضيف", "warning"));
+        }
+
+        function enterFileFolder(idx) {
+            const f = (window.__filesViewItems || [])[idx];
+            if (!f) return;
+            navigateExplorerPath(currentExplorerPath + f.name + '/');
+        }
+
+        function openFileListItem(idx) {
+            const f = (window.__filesViewItems || [])[idx];
+            if (!f) return;
+            if (isDirectory(f)) { enterFileFolder(idx); return; }
+            const isImage = (f.mimeType || '').startsWith('image/');
+            const isVideo = (f.mimeType || '').startsWith('video/');
+            const cached = fileThumbnailCache.get(f.id);
+            if ((isImage || isVideo) && cached) {
+                openModal(f.name, cached);
+            } else if ((isImage || isVideo)) {
+                showToast("بانتظار تحميل المصغرة الحقيقية... حاول المعاينة بعد لحظات", "info");
+                requestFileThumbnail(f);
+            } else {
+                showToast("معاينة مباشرة متاحة للصور والفيديوهات فقط حالياً", "info");
+            }
+        }
+
+        function toggleFileSelectionIdx(idx, checked) {
+            const f = (window.__filesViewItems || [])[idx];
+            if (f) toggleFileSelection(f.id, checked);
+        }
+
+        // زر رأس ترحيل ومسارات القشرة العلوية (Breadcrumbs)
+        function breadcrumbHtml(path) {
+            const parts = (path || '/').split('/').filter(Boolean);
+            let crumb = `<button onclick="navigateExplorerPath('/')" class="text-emerald-400 hover:underline">الرئيسية 🏠</button>`;
+            let acc = '';
+            parts.forEach(p => {
+                acc += p + '/';
+                const target = '/' + acc;
+                crumb += `<span class="text-slate-600 mx-0.5">/</span><button onclick="navigateExplorerPath('${target.replace(/'/g, "")}')" class="text-emerald-400 hover:underline">${p}</button>`;
+            });
+            return crumb;
+        }
+
         function renderFilesExplorerView() {
             const panel = document.getElementById("panel-content");
             panel.innerHTML = `
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-2.5 mb-2.5 border-b border-slate-800 gap-2">
                     <div>
                         <h2 class="text-lg md:text-xl font-bold text-emerald-300">📁 مستكشف ملفات وذاكرة الهاتف</h2>
-                        <p class="text-xs text-slate-400">معاينة صور مصغرة وتحديد فردي/الكل وتنزيل أرشيف ZIP</p>
+                        <p class="text-xs text-slate-400">تصفح مجلدات الجهاز فتحاً مباشراً + معاينة مصغرات حقيقية + تنزيل أرشيف ZIP</p>
                     </div>
                     <div class="flex items-center gap-2">
-                        <button onclick="sendRPCCommand('storage_explore', { path: currentExplorerPath }); showToast('جاري طلب جلب قائمة الملفات الحية...', 'info');" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs px-3 py-1.5 rounded-lg transition flex items-center gap-1">
+                        <button onclick="navigateExplorerPath(currentExplorerPath)" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs px-3 py-1.5 rounded-lg transition flex items-center gap-1">
                             <span>جلب الحية 🔄</span>
                         </button>
                     </div>
@@ -1762,12 +2085,12 @@
 
                 <!-- Breadcrumb Path Bar -->
                 <div class="bg-slate-900/90 border border-slate-800 rounded-xl px-3 py-1.5 mb-2.5 flex items-center justify-between text-xs font-mono text-emerald-400">
-                    <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+                    <div class="flex items-center gap-1 overflow-x-auto no-scrollbar">
                         <span class="text-slate-400 font-bold">المسار:</span>
-                        <span>${currentExplorerPath}</span>
+                        ${breadcrumbHtml(currentExplorerPath)}
                     </div>
                     ${currentExplorerPath !== '/' ? `
-                        <button onclick="currentExplorerPath = '/'; renderFilesExplorerView();" class="text-[10px] text-amber-400 hover:underline">الرئيسية 🏠</button>
+                        <button onclick="navigateExplorerPath('/')" class="text-[10px] text-amber-400 hover:underline shrink-0">الرئيسية 🏠</button>
                     ` : ''}
                 </div>
 
@@ -1817,6 +2140,7 @@
                             ${fileSortAsc ? 'تصاعدي ⬆️' : 'تنازلي ⬇️'}
                         </button>
                     </div>
+                    ${renderModeButtons('files')}
                 </div>
 
                 <!-- Files List Container -->
@@ -1878,84 +2202,140 @@
             const container = document.getElementById("files-list-container");
             if (!container) return;
 
+            if (filesData.length > 0) filesLoading = false;
+
             const countEl = document.getElementById("files-selected-count");
             if (countEl) countEl.innerText = `(${selectedFileIds.size} محدد)`;
+
+            if (filesLoading && filesData.length === 0) {
+                container.innerHTML = `
+                    <div class="p-6 text-center text-xs text-amber-300 bg-slate-900/40 rounded-xl border border-amber-700/40 animate-pulse">
+                        ⏳ جارٍ قراءة محتويات المجلد الحية من الهاتف المضيف...
+                    </div>
+                `;
+                return;
+            }
 
             if (filesData.length === 0) {
                 container.innerHTML = `
                     <div class="p-8 text-center text-xs text-slate-500 bg-slate-900/40 rounded-xl border border-slate-800">
                         <div class="text-3xl mb-2">📁</div>
-                        <p class="font-bold text-slate-300 text-sm">المجلد فارغ لا يضم أي ملفات افتراضية</p>
-                        <p class="text-slate-500 mt-1">قم بربط الهاتف المضيف والضغط على "جلب الحية 🔄" لقراءة ملفات وذاكرة الهاتف المباشرة</p>
+                        <p class="font-bold text-slate-300 text-sm">المجلد فارغ أو لا يمكن قراءته</p>
+                        <p class="text-slate-500 mt-1">تأكد من منح إذن الملفات للهاتف المضيف واضغط "جلب الحية 🔄"</p>
                     </div>
                 `;
                 return;
             }
 
             let filtered = filesData.filter(f => {
-                const matchesSearch = f.name.toLowerCase().includes(fileSearchQuery);
+                const matchesSearch = (f.name || '').toLowerCase().includes(fileSearchQuery);
+                const isDir = isDirectory(f);
+                const mime = f.mimeType || '';
                 let matchesType = true;
-                if (fileTypeFilter === 'folder') matchesType = f.isDir;
-                else if (fileTypeFilter === 'image') matchesType = f.mimeType && f.mimeType.startsWith('image/');
-                else if (fileTypeFilter === 'video') matchesType = f.mimeType && f.mimeType.startsWith('video/');
-                else if (fileTypeFilter === 'audio') matchesType = f.mimeType && f.mimeType.startsWith('audio/');
-                else if (fileTypeFilter === 'document') matchesType = f.mimeType && (f.mimeType.includes('pdf') || f.mimeType.includes('doc') || f.mimeType.includes('zip'));
+                if (fileTypeFilter === 'folder') matchesType = isDir;
+                else if (fileTypeFilter === 'image') matchesType = mime.startsWith('image/');
+                else if (fileTypeFilter === 'video') matchesType = mime.startsWith('video/');
+                else if (fileTypeFilter === 'audio') matchesType = mime.startsWith('audio/');
+                else if (fileTypeFilter === 'document') matchesType = mime.includes('pdf') || mime.includes('doc') || mime.includes('zip') || mime.includes('text');
                 return matchesSearch && matchesType;
             });
 
             filtered.sort((a, b) => {
                 let comparison = 0;
-                if (fileSortBy === 'name') comparison = a.name.localeCompare(b.name, 'ar');
-                else if (fileSortBy === 'size') comparison = a.size - b.size;
-                else if (fileSortBy === 'date') comparison = a.dateAdded - b.dateAdded;
-                return fileSortAsc ? comparison : -comparison;
+                if (fileSortBy === 'name') comparison = (a.name || '').localeCompare(b.name || '', 'ar');
+                else if (fileSortBy === 'size') comparison = (a.size || 0) - (b.size || 0);
+                else if (fileSortBy === 'date') comparison = (a.dateAdded || 0) - (b.dateAdded || 0);
+                // المجلدات دائماً أولاً
+                const dirDiff = (isDirectory(b) === isDirectory(a)) ? 0 : (isDirectory(b) ? 1 : -1);
+                return dirDiff !== 0 ? dirDiff : (fileSortAsc ? comparison : -comparison);
             });
+
+            // المرجع المفهرس للنقر الآمن (بلا حقن نصوص في onclick)
+            window.__filesViewItems = filtered;
 
             if (filtered.length === 0) {
                 container.innerHTML = `<div class="p-6 text-center text-xs text-slate-500 bg-slate-900/40 rounded-xl border border-slate-800">لا توجد ملفات تطابق نتائج البحث المحددة.</div>`;
                 return;
             }
 
-            container.innerHTML = filtered.map(f => {
+            const fileMode = listModes.files || 'details';
+
+            // ===== عرض شبكي بمصغرات حقيقية (صغير/متوسط/كبير) =====
+            if (fileMode !== 'details') {
+                const gridClass = fileMode === 'small' ? 'files-flex-grid' : `files-flex-grid vm-${fileMode}`;
+                let renderedCount = 0;
+                container.className = `${gridClass} max-h-[420px] overflow-y-auto custom-scrollbar pr-1 flex-1`;
+                container.innerHTML = filtered.map((f, idx) => {
+                    const isSelected = selectedFileIds.has(f.id);
+                    const isDir = isDirectory(f);
+                    const isImage = (f.mimeType || '').startsWith('image/');
+                    const isVideo = (f.mimeType || '').startsWith('video/');
+                    const cached = fileThumbnailCache.get(f.id);
+                    const formattedSize = isDir ? 'مجلد' : ((f.size || 0) > 1048576 ? ((f.size / 1048576).toFixed(1) + ' MB') : ((f.size / 1024).toFixed(1) + ' KB'));
+
+                    let innerVisual;
+                    if (isDir) {
+                        innerVisual = `<div class="file-thumb-img flex items-center justify-center text-2xl">📁</div>`;
+                    } else if ((isImage || isVideo)) {
+                        if (cached) {
+                            innerVisual = `<img id="thumb-img-${f.id}" src="${cached}" class="file-thumb-img" loading="lazy">`;
+                        } else {
+                            innerVisual = `<div class="file-thumb-img flex items-center justify-center text-xl ${isVideo ? '🎬' : '🖼️'}" id="thumb-box-${f.id}">${isVideo ? '🎬' : '🖼️'}</div>`;
+                            if (renderedCount < 120) { requestFileThumbnail(f); renderedCount++; }
+                        }
+                    } else {
+                        innerVisual = `<div class="file-thumb-img flex items-center justify-center text-2xl">📄</div>`;
+                    }
+
+                    return `
+                        <div class="file-thumb-card ${isSelected ? 'selected' : ''}" onclick="openFileListItem(${idx})">
+                            <input type="checkbox" ${isSelected ? 'checked' : ''} onclick="event.stopPropagation(); toggleFileSelectionIdx(${idx}, this.checked)" class="file-thumb-select">
+                            ${innerVisual}
+                            <div class="file-thumb-name">${f.name || ''}</div>
+                            <div class="text-[9px] text-slate-500 pb-1 text-center">${formattedSize}</div>
+                        </div>
+                    `;
+                }).join('');
+                return;
+            }
+
+            // ===== عرض التفاصيل (القائمة الكلاسيكية المصححة) =====
+            container.className = 'space-y-2 max-h-[350px] overflow-y-auto custom-scrollbar pr-1 flex-1';
+            container.innerHTML = filtered.map((f, idx) => {
                 const isSelected = selectedFileIds.has(f.id);
-                const isImage = f.mimeType && f.mimeType.startsWith('image/');
-                const isVideo = f.mimeType && f.mimeType.startsWith('video/');
-                const icon = f.isDir ? '📁' : isImage ? '🖼️' : isVideo ? '🎬' : '📄';
-                const formattedSize = f.isDir ? 'مجلد' : (f.size > 1048576 ? (f.size / 1048576).toFixed(1) + ' MB' : (f.size / 1024).toFixed(1) + ' KB');
-                const formattedDate = new Date(f.dateAdded).toLocaleDateString('ar-SA');
+                const isDir = isDirectory(f);
+                const isImage = (f.mimeType || '').startsWith('image/');
+                const isVideo = (f.mimeType || '').startsWith('video/');
+                const cached = fileThumbnailCache.get(f.id);
+                const icon = isDir ? '📁' : isImage ? '🖼️' : isVideo ? '🎬' : '📄';
+                const formattedSize = isDir ? 'مجلد' : ((f.size || 0) > 1048576 ? ((f.size / 1048576).toFixed(1) + ' MB') : ((f.size / 1024).toFixed(1) + ' KB'));
+                const formattedDate = new Date(f.dateAdded || 0).toLocaleDateString('ar-SA');
+
+                const thumbCell = (isImage || isVideo) && cached
+                    ? `<img src="${cached}" class="w-10 h-10 rounded-lg object-cover border border-slate-700/80 cursor-pointer hover:border-emerald-400" onclick="openFileListItem(${idx})">`
+                    : `<span class="text-xl shrink-0 cursor-pointer ${isImage || isVideo ? 'hover:scale-125 transition inline-block' : ''}" onclick="openFileListItem(${idx})">${icon}</span>`;
 
                 return `
                     <div class="p-2.5 bg-slate-900/80 hover:bg-slate-800/80 border ${isSelected ? 'border-emerald-500/80 bg-emerald-950/20' : 'border-slate-800'} rounded-xl flex items-center justify-between transition">
                         <div class="flex items-center gap-2.5 min-w-0">
-                            <input type="checkbox" ${isSelected ? 'checked' : ''} onchange="toggleFileSelection(${f.id}, this.checked)" class="w-4 h-4 accent-emerald-500 rounded shrink-0">
-                            
-                            <!-- Thumbnail Preview Box for Photos & Videos -->
-                            ${isImage ? `
-                                <div onclick="openModal('${f.name}', 'https://picsum.photos/600/400?random=${f.id}')" class="w-10 h-10 bg-slate-950 rounded-lg border border-slate-700/80 overflow-hidden shrink-0 cursor-pointer hover:border-emerald-400 transition">
-                                    <img src="https://picsum.photos/100/100?random=${f.id}" class="w-full h-full object-cover">
-                                </div>
-                            ` : `
-                                <span class="text-xl shrink-0">${icon}</span>
-                            `}
-
+                            <input type="checkbox" ${isSelected ? 'checked' : ''} onchange="toggleFileSelectionIdx(${idx}, this.checked)" class="w-4 h-4 accent-emerald-500 rounded shrink-0">
+                            ${thumbCell}
                             <div class="min-w-0">
-                                <p class="text-xs font-bold text-slate-200 truncate">${f.name}</p>
+                                <p class="text-xs font-bold text-slate-200 truncate">${f.name || ''}</p>
                                 <p class="text-[10px] text-slate-400 mt-0.5">${formattedSize} • ${formattedDate}</p>
                             </div>
                         </div>
 
                         <div class="flex items-center gap-1.5 shrink-0">
-                            ${isImage ? `
-                                <button onclick="openModal('${f.name}', 'https://picsum.photos/800/600?random=${f.id}')" class="bg-slate-800 text-slate-200 border border-slate-700 px-2 py-1 rounded-lg text-[10px] font-bold">
+                            ${!isDir ? `
+                                <button onclick="openFileListItem(${idx})" class="bg-slate-800 text-slate-200 border border-slate-700 px-2 py-1 rounded-lg text-[10px] font-bold">
                                     معاينة 🔍
                                 </button>
-                            ` : ''}
-                            ${!f.isDir ? `
-                                <button onclick="showToast('جارٍ تحميل ${f.name}...', 'info')" class="bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-300 border border-emerald-500/30 px-2.5 py-1 rounded-lg text-[11px] font-bold transition">
+                                <button onclick="showToast('جارٍ تحميل ' + __filesViewItems[${idx}].name + '...', 'info')" class="bg-emerald-600/30 hover:bg-emerald-600/50 text-emerald-300 border border-emerald-500/30 px-2.5 py-1 rounded-lg text-[11px] font-bold transition">
                                     تنزيل ⬇️
                                 </button>
                             ` : `
-                                <button onclick="currentExplorerPath += '${f.name}/'; renderFilesExplorerView();" class="bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 border border-blue-500/30 px-2.5 py-1 rounded-lg text-[11px] font-bold transition">
+                                <button onclick="enterFileFolder(${idx})" class="bg-blue-600/30 hover:bg-blue-600/50 text-blue-300 border border-blue-500/30 px-2.5 py-1 rounded-lg text-[11px] font-bold transition">
                                     فتح 📂
                                 </button>
                             `}
@@ -2040,14 +2420,24 @@
                             <span>🎙️ بث الميكروفون فقط</span>
                         </button>
 
-                        ${isCamActive ? `
-                            <button onclick="switchLiveCameraLens()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-2 rounded-xl font-bold transition border border-slate-700">
-                                🔄 ${streamState.isFront ? 'كاميرا أماميّة' : 'كاميرا خلفيّة'}
-                            </button>
-                        ` : ''}
+                        <!-- Camera Lens Switch — متاح دائماً (قبل أثناء البث) -->
+                        <button onclick="switchLiveCameraLens()" title="تبديل بين الكاميرا الأمامية والخلفية" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-2 rounded-xl font-bold transition border border-slate-700 flex items-center gap-1.5">
+                            ${streamState.isFront ? '🤳 أمامية' : '📷 خلفية'}
+                            <span class="text-[9px] text-slate-500">تبديل ⟷</span>
+                        </button>
 
-                        <button onclick="toggleLiveAudio()" class="bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-2 rounded-xl font-bold transition border border-slate-700">
-                            ${streamState.audioEnabled ? '🔊 المايك: مفعّل' : '🔇 مكتوم'}
+                        <!-- Speaker / Mic Button — أيقونة مكبر صوت: تومض بالأخضر عند التفعيل، حمراء مع خط شطب عند الكتم -->
+                        <button onclick="toggleLiveAudio()" title="${streamState.audioEnabled ? 'الصوت مفعّل — انقر للكتم' : 'الصوت مكتوم — انقر للتفعيل'}" class="speaker-btn ${streamState.audioEnabled ? 'speaker-btn-on' : 'speaker-btn-off'} px-3 py-2 rounded-xl font-bold transition flex items-center gap-2">
+                            <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <!-- جسم مكبر الصوت -->
+                                <path d="M11 5 L6 9 H3 v6 h3 l5 4 z" fill="currentColor" fill-opacity="0.25"></path>
+                                <path d="M11 5 L6 9 H3 v6 h3 l5 4 z"></path>
+                                <path d="M15.5 8.5 a5 5 0 0 1 0 7"></path>
+                                <path d="M18 6 a7.5 7.5 0 0 1 0 12"></path>
+                                <!-- خط الشطب عند الكتم -->
+                                <line class="speaker-slash" x1="4" y1="4" x2="21" y2="20" stroke="currentColor" stroke-width="2.2"></line>
+                            </svg>
+                            <span class="text-[10px] ${streamState.audioEnabled ? 'text-emerald-300' : 'text-rose-300'}">${streamState.audioEnabled ? 'الصوت مفعّل' : 'الصوت مكتوم'}</span>
                         </button>
                     </div>
 
@@ -2060,13 +2450,33 @@
             `;
         }
 
+        // تطبيق سياسة الكتم على عناصر الوسائط في الصفحة
+        function applyStreamMuteToElements() {
+            try {
+                const audioEl = document.getElementById("remote-audio");
+                if (!audioEl) return;
+                const shouldMute = streamState.audioEnabled !== true;
+                audioEl.muted = shouldMute;
+                if (!shouldMute) {
+                    const p = audioEl.play();
+                    if (p && p.catch) p.catch(() => {});
+                }
+            } catch (e) { console.warn('mute apply failed', e); }
+        }
+
         function toggleScreenStream() {
             if (streamState.active && streamState.mode === 'screen') {
                 stopLiveStream();
                 return;
             }
+            streamState.mode = 'screen';
+            streamState.active = false;
+            // ☝️ سياسة الكتم الافتراضي: يغلب أي حالة قديمة مهما كانت
+            streamState.audioEnabled = false;
+            applyStreamMuteToElements();
             sendRPCCommand('start_screen_stream');
-            showToast("تم إرسال طلب بدء بث شاشة الجوال المباشرة...", "info");
+            showToast("تم إرسال طلب بدء بث شاشة الجوال المباشرة... (الصوت مكتوم افتراضياً)", "info");
+            if (activeTab === 'camera') renderCameraStreamView();
         }
 
         function toggleLiveCameraStream() {
@@ -2074,8 +2484,14 @@
                 stopLiveStream();
                 return;
             }
-            sendRPCCommand('start_camera_stream', { front: streamState.isFront, audio: streamState.audioEnabled });
-            showToast("تم إرسال أمر بدء بث الكاميرا والصوت للهاتف المضيف", "success");
+            streamState.mode = 'camera';
+            streamState.active = false;
+            // ☝️ سياسة الكتم الافتراضي حتى لو كانت أيقونة الصوت مفعّلة سابقاً
+            streamState.audioEnabled = false;
+            applyStreamMuteToElements();
+            sendRPCCommand('start_camera_stream', { front: streamState.isFront, audio: true });
+            showToast("تم إرسال أمر بدء بث الكاميرا — الصوت مكتوم افتراضياً (انقر مكبر الصوت للتفعيل)", "success");
+            if (activeTab === 'camera') renderCameraStreamView();
         }
 
         function startAudioOnlyStream() {
@@ -2083,8 +2499,13 @@
                 stopLiveStream();
                 return;
             }
+            streamState.mode = 'audio';
+            streamState.active = false;
+            streamState.audioEnabled = true;   // بث الصوت فقط يعمل مفعلاً بشكل طبيعي
+            applyStreamMuteToElements();
             sendRPCCommand('start_audio_stream');
             showToast("تم إرسال أمر بدء بث الصوت فقط من الميكروفون", "success");
+            if (activeTab === 'camera') renderCameraStreamView();
         }
 
         function stopLiveStream() {
@@ -2092,21 +2513,26 @@
             streamState.active = false;
             streamState.mode = 'none';
             showToast("تم إيقاف كافة وسائل البث المباشر", "info");
-            renderCameraStreamView();
+            if (activeTab === 'camera') renderCameraStreamView();
         }
 
         function switchLiveCameraLens() {
             streamState.isFront = !streamState.isFront;
-            sendRPCCommand('switch_camera');
-            showToast(`تم التبديل إلى الكاميرا: ${streamState.isFront ? 'الأمامية' : 'الخلفية'}`, "info");
-            renderCameraStreamView();
+            if (streamState.active && streamState.mode === 'camera') {
+                sendRPCCommand('switch_camera');
+                showToast(`جاري التبديل إلى الكاميرا: ${streamState.isFront ? 'الأمامية' : 'الخلفية'}...`, "info");
+            } else {
+                showToast(`الكاميرا المختارة للبث القادم: ${streamState.isFront ? 'الأمامية' : 'الخلفية'}`, "info");
+            }
+            if (activeTab === 'camera') renderCameraStreamView();
         }
 
         function toggleLiveAudio() {
             streamState.audioEnabled = !streamState.audioEnabled;
+            applyStreamMuteToElements();
             sendRPCCommand('toggle_audio', { enable: streamState.audioEnabled });
-            showToast(`حالة الميكروفون: ${streamState.audioEnabled ? 'مفعّل' : 'مكتوم'}`, "info");
-            renderCameraStreamView();
+            showToast(`حالة الصوت: ${streamState.audioEnabled ? 'مفعّل' : 'مكتوم'}`, "info");
+            if (activeTab === 'camera') renderCameraStreamView();
         }
 
         // View 4: Contacts List View
@@ -2143,6 +2569,7 @@
                             ${contactSortAsc ? 'تصاعدي ⬆️' : 'تنازلي ⬇️'}
                         </button>
                     </div>
+                    ${renderModeButtons('contacts')}
                 </div>
 
                 <!-- Contacts Cards Container -->
@@ -2195,24 +2622,30 @@
                 return;
             }
 
-            container.innerHTML = filtered.map(c => `
-                <div class="p-3 bg-slate-900/80 hover:bg-slate-800/80 border border-slate-800 rounded-xl flex items-start gap-2.5 transition">
-                    <div class="w-9 h-9 rounded-full bg-emerald-600/20 border border-emerald-500/30 flex items-center justify-center text-emerald-300 font-bold text-xs shrink-0">
+            container.innerHTML = filtered.map(c => {
+                const cMode = listModes.contacts || 'details';
+                const nameSize = cMode === 'small' ? 'text-[10px]' : cMode === 'large' ? 'text-base' : 'text-xs';
+                const avatarSize = cMode === 'small' ? 'w-7 h-7' : cMode === 'large' ? 'w-12 h-12 text-base' : 'w-9 h-9';
+                const pad = cMode === 'small' ? 'p-2' : cMode === 'large' ? 'p-4' : 'p-3';
+                return `
+                <div class="${pad} bg-slate-900/80 hover:bg-slate-800/80 border border-slate-800 rounded-xl flex items-start gap-2.5 transition">
+                    <div class="${avatarSize} rounded-full bg-emerald-600/20 border border-emerald-500/30 flex items-center justify-center text-emerald-300 font-bold text-xs shrink-0">
                         ${c.displayName ? c.displayName.charAt(0) : '?'}
                     </div>
                     <div class="flex-1 min-w-0">
-                        <p class="text-xs font-bold text-slate-100 truncate">${c.displayName}</p>
+                        <p class="${nameSize} font-bold text-slate-100 truncate">${escHtml(c.displayName || '')}</p>
                         <div class="mt-1 space-y-0.5">
                             ${c.phoneNumbers ? c.phoneNumbers.map(p => `
                                 <div class="flex items-center justify-between text-[11px] font-mono text-slate-400">
-                                    <span>${p}</span>
+                                    <span>${escHtml(p)}</span>
                                     <button onclick="navigator.clipboard.writeText('${p}'); showToast('تم نسخ الرقم: ${p}', 'info');" class="text-emerald-400 hover:text-emerald-300 text-[10px]">نسخ 📋</button>
                                 </div>
                             `).join('') : ''}
                         </div>
                     </div>
                 </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
         // View 5: SMS Messages List View
@@ -2221,13 +2654,113 @@
         let smsSortBy = "date";
         let smsSortAsc = false;
 
+        // ============================================================
+        //    Phase 2 — الرسائل مجمّعة بجهة الاتصال + نافذة الدردشة
+        // ============================================================
+        function escHtml(str) {
+            return String(str === undefined || str === null ? '' : str)
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        function buildSmsThreads() {
+            const threads = {};
+            smsData.forEach(s => {
+                const key = normNum(s.address) || ('mid' + s.id);
+                if (!threads[key]) threads[key] = { key: key, address: s.address || '', messages: [] };
+                threads[key].messages.push(s);
+            });
+            return Object.values(threads).map(t => {
+                t.name = ((t.messages.find(m => m.contactName) || {}).contactName) || resolveContactName(t.address);
+                t.messages.sort((a, b) => (a.date || 0) - (b.date || 0));
+                const last = t.messages[t.messages.length - 1] || {};
+                t.last = last.body || '';
+                t.lastDate = last.date || 0;
+                t.count = t.messages.length;
+                t.lastIncoming = last.type !== 2;
+                return t;
+            });
+        }
+
+        function filterSmsThreads(threads) {
+            if (!smsSearchQuery) return threads;
+            return threads.filter(t =>
+                (t.name || '').toLowerCase().includes(smsSearchQuery) ||
+                (t.address || '').toLowerCase().includes(smsSearchQuery) ||
+                (t.last || '').toLowerCase().includes(smsSearchQuery)
+            );
+        }
+
+        // إغلاق النوافذ العلوية (دردشة/مجموعة إشعارات)
+        function closeWindowOverlay() {
+            const el = document.getElementById('overlay-live-window');
+            if (el) el.remove();
+            document.removeEventListener('keydown', window.__overlayEscHandler || (() => {}));
+            window.__overlayEscHandler = null;
+        }
+
+        function mountWindowOverlay(innerHtml) {
+            closeWindowOverlay();
+            const wrap = document.createElement('div');
+            wrap.id = 'overlay-live-window';
+            wrap.className = 'overlay-window';
+            wrap.innerHTML = `
+                <div class="chat-window">${innerHtml}
+                    <div class="text-center text-[10px] text-slate-500 pb-2">نافذة معاينة حية من هاتف المضيف — لا يُرسل من هنا في هذه المرحلة</div>
+                </div>
+            `;
+            wrap.addEventListener('click', (e) => { if (e.target === wrap) closeWindowOverlay(); });
+            document.body.appendChild(wrap);
+            window.__overlayEscHandler = (e) => { if (e.key === 'Escape') closeWindowOverlay(); };
+            document.addEventListener('keydown', window.__overlayEscHandler);
+        }
+
+        // نافذة الدردشة المتقدمة لخيوط الرسائل
+        function openSmsChatWindow(key) {
+            const thread = (window.__smsThreads || []).find(t => t.key === key);
+            if (!thread) { showToast("انتهت صلاحية هذه المحادثة — أعد جلب الرسائل", "warning"); return; }
+            const title = thread.name || thread.address || 'محادثة';
+            const sub = thread.name ? (thread.address || '') : '';
+            const bubbles = thread.messages.map(m => {
+                const incoming = m.type !== 2;
+                const timeTxt = new Date(m.date || Date.now()).toLocaleString('ar-SA');
+                return `
+                    <div class="bubble-wrap ${incoming ? 'in' : 'out'}">
+                        <div class="bubble ${incoming ? 'in' : 'out'}">
+                            ${escHtml(m.body)}
+                            <div class="bubble-time">${timeTxt}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            mountWindowOverlay(`
+                <div class="chat-header">
+                    <div class="flex items-center gap-2.5 min-w-0">
+                        <div class="w-9 h-9 rounded-full bg-emerald-600/25 border border-emerald-500/50 flex items-center justify-center text-sm font-bold text-emerald-300 shrink-0">${escHtml((title || '؟').charAt(0))}</div>
+                        <div class="min-w-0">
+                            <p class="text-sm font-bold text-slate-100 truncate">${escHtml(title)}</p>
+                            ${sub ? `<p class="text-[10px] font-mono text-slate-500 truncate">${escHtml(sub)}</p>` : ''}
+                        </div>
+                    </div>
+                    <button onclick="closeWindowOverlay()" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-rose-600/80 border border-slate-700 text-slate-300 hover:text-white flex items-center justify-center text-sm font-bold transition">✕</button>
+                </div>
+                <div class="chat-body custom-scrollbar" id="chat-body-scroll">${bubbles || '<p class="text-center text-xs text-slate-500">لا توجد رسائل في هذه المحادثة</p>'}</div>
+                <div class="chat-input-row">
+                    <input type="text" disabled placeholder="الرد عبر الهاتف المضيف (قيد التنصيب في مرحلة قادمة)" class="flex-1 bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-500 focus:outline-none">
+                    <button disabled class="bg-slate-800 text-slate-500 border border-slate-700 rounded-xl px-3 py-2 text-xs font-bold cursor-not-allowed">إرسال ➤</button>
+                </div>
+            `);
+            const body = document.getElementById('chat-body-scroll');
+            if (body) body.scrollTop = body.scrollHeight;
+        }
+
         function renderSmsListView() {
             const panel = document.getElementById("panel-content");
             panel.innerHTML = `
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-2.5 mb-2.5 border-b border-slate-800 gap-2">
                     <div>
                         <h2 class="text-lg md:text-xl font-bold text-emerald-300">💬 الرسائل القصيرة (SMS)</h2>
-                        <p class="text-xs text-slate-400">صندوق الرسائل الواردة والصادرة الحية من الهاتف</p>
+                        <p class="text-xs text-slate-400">مجمّعة حسب جهة الاتصال المحفوظة — انقر محادثة للفتح كنافذة دردشة</p>
                     </div>
                     <button onclick="sendRPCCommand('sms_list'); showToast('جاري طلب جلب قائمة الرسائل النصية...', 'info');" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs px-3 py-1.5 rounded-lg transition flex items-center gap-1">
                         <span>جلب الحية 🔄</span>
@@ -2257,6 +2790,7 @@
                             ${smsSortAsc ? 'الأقدم أولاً ⬆️' : 'الأحدث أولاً ⬇️'}
                         </button>
                     </div>
+                    ${renderModeButtons('sms')}
                 </div>
 
                 <!-- Messages List -->
@@ -2293,8 +2827,39 @@
                 return;
             }
 
+            const smsMode = listModes.sms || 'threads';
+
+            // ===== وضع المحادثات المجمّعة (الافتراضي الجديد) =====
+            if (smsMode === 'threads') {
+                window.__smsThreads = filterSmsThreads(buildSmsThreads()).sort((a, b) => (b.lastDate || 0) - (a.lastDate || 0));
+                if (window.__smsThreads.length === 0) {
+                    container.innerHTML = `<div class="p-6 text-center text-xs text-slate-500 bg-slate-900/40 rounded-xl border border-slate-800">لا توجد محادثات مطابقة للبحث.</div>`;
+                    return;
+                }
+                container.innerHTML = window.__smsThreads.map((t, idx) => `
+                    <div onclick="openSmsChatWindow('${t.key.replace(/'/g, "")}')" class="p-3 bg-slate-900/80 hover:bg-slate-800/80 border border-slate-800 rounded-xl transition cursor-pointer group">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-9 h-9 rounded-full bg-emerald-600/25 border border-emerald-500/40 flex items-center justify-center text-xs font-bold text-emerald-300 shrink-0">${escHtml((t.name || t.address || '؟').charAt(0))}</div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center justify-between gap-2">
+                                    <p class="text-xs font-bold text-slate-100 truncate">${escHtml(t.name || t.address || 'غير معروف')}</p>
+                                    <span class="text-[9px] text-slate-500 font-mono shrink-0">${new Date(t.lastDate || 0).toLocaleString('ar-SA')}</span>
+                                </div>
+                                <div class="flex items-center justify-between gap-2 mt-0.5">
+                                    <p class="text-[11px] text-slate-400 truncate">${t.lastIncoming ? '' : '📤 '}${escHtml((t.last || '').slice(0, 80))}</p>
+                                    <span class="text-[9px] px-1.5 py-0.5 rounded-full bg-emerald-950 border border-emerald-600/50 text-emerald-300 font-bold shrink-0">${t.count} رسالة</span>
+                                </div>
+                            </div>
+                            <span class="text-slate-600 group-hover:text-emerald-400 transition shrink-0">‹</span>
+                        </div>
+                    </div>
+                `).join('');
+                return;
+            }
+
+            // ===== أوضاع القائمة الموحدة (تفاصيل/صغير/متوسط/كبير) =====
             let filtered = smsData.filter(s => {
-                const matchesSearch = s.body.toLowerCase().includes(smsSearchQuery) || s.address.includes(smsSearchQuery) || (s.contactName && s.contactName.toLowerCase().includes(smsSearchQuery));
+                const matchesSearch = (s.body || '').toLowerCase().includes(smsSearchQuery) || (s.address || '').includes(smsSearchQuery) || ((s.contactName || '').toLowerCase().includes(smsSearchQuery));
                 let matchesType = true;
                 if (smsFilterType === 'incoming') matchesType = s.type === 1;
                 else if (smsFilterType === 'outgoing') matchesType = s.type === 2;
@@ -2303,8 +2868,8 @@
 
             filtered.sort((a, b) => {
                 let comp = 0;
-                if (smsSortBy === 'date') comp = a.date - b.date;
-                else if (smsSortBy === 'sender') comp = a.address.localeCompare(b.address);
+                if (smsSortBy === 'date') comp = (a.date || 0) - (b.date || 0);
+                else if (smsSortBy === 'sender') comp = (resolveContactName(a.address) || a.address || '').localeCompare(resolveContactName(b.address) || b.address || '');
                 return smsSortAsc ? comp : -comp;
             });
 
@@ -2313,21 +2878,28 @@
                 return;
             }
 
-            container.innerHTML = filtered.map(s => {
+            container.innerHTML = filtered.map((s, idx) => {
                 const isIncoming = s.type === 1;
-                const dateStr = new Date(s.date).toLocaleString('ar-SA');
+                const dateStr = new Date(s.date || 0).toLocaleString('ar-SA');
+                const threadKey = normNum(s.address) || ('mid' + s.id);
+                const contactName = s.contactName || resolveContactName(s.address);
+                const textSize = smsMode === 'small' ? 'text-[10px]' : smsMode === 'large' ? 'text-sm' : 'text-xs';
+                const pad = smsMode === 'small' ? 'p-2' : smsMode === 'large' ? 'p-4' : 'p-3';
                 return `
-                    <div class="p-3 bg-slate-900/80 hover:bg-slate-800/80 border border-slate-800 rounded-xl transition">
+                    <div class="${pad} bg-slate-900/80 hover:bg-slate-800/80 border border-slate-800 rounded-xl transition">
                         <div class="flex items-center justify-between mb-1">
-                            <div class="flex items-center gap-1.5">
-                                <span class="text-[10px] px-1.5 py-0.5 rounded font-bold ${isIncoming ? 'bg-emerald-950 border border-emerald-500/30 text-emerald-300' : 'bg-blue-950 border border-blue-500/30 text-blue-300'}">
+                            <div class="flex items-center gap-1.5 min-w-0">
+                                <span class="text-[10px] px-1.5 py-0.5 rounded font-bold ${isIncoming ? 'bg-emerald-950 border border-emerald-500/30 text-emerald-300' : 'bg-blue-950 border border-blue-500/30 text-blue-300'} shrink-0">
                                     ${isIncoming ? '📩 واردة' : '📤 صادرة'}
                                 </span>
-                                <span class="text-xs font-bold text-slate-200">${s.contactName || s.address}</span>
+                                <span class="text-xs font-bold text-slate-200 truncate">${escHtml(contactName || s.address || 'غير معروف')}</span>
                             </div>
-                            <span class="text-[10px] text-slate-500">${dateStr}</span>
+                            <span class="text-[10px] text-slate-500 shrink-0">${dateStr}</span>
                         </div>
-                        <p class="text-xs text-slate-300 leading-relaxed bg-slate-950/40 p-2 rounded-lg border border-slate-800/60">${s.body}</p>
+                        <div class="flex items-start justify-between gap-2">
+                            <p class="${textSize} text-slate-300 leading-relaxed bg-slate-950/40 p-2 rounded-lg border border-slate-800/60 flex-1 min-w-0">${escHtml(s.body || '')}</p>
+                            <button onclick="openSmsChatWindow('${threadKey.replace(/'/g, "")}')" class="${smsMode === 'small' ? 'text-[9px]' : 'text-[10px]'} bg-emerald-600/25 hover:bg-emerald-600/45 text-emerald-300 border border-emerald-500/30 px-2 py-1 rounded-lg font-bold shrink-0 transition">دردشة 💬</button>
+                        </div>
                     </div>
                 `;
             }).join('');
@@ -2338,6 +2910,7 @@
         let callTypeFilter = "all";
         let callSortBy = "date";
         let callSortAsc = false;
+        let callsPermissionWarning = "";
 
         function renderCallsListView() {
             const panel = document.getElementById("panel-content");
@@ -2376,6 +2949,7 @@
                             ${callSortAsc ? 'الأقدم أولاً ⬆️' : 'الأحدث أولاً ⬇️'}
                         </button>
                     </div>
+                    ${renderModeButtons('calls')}
                 </div>
 
                 <!-- Call Logs List -->
@@ -2401,6 +2975,18 @@
             const container = document.getElementById("calls-list-container");
             if (!container) return;
 
+            if (callsData.length === 0 && callsPermissionWarning) {
+                container.innerHTML = `
+                    <div class="p-8 text-center text-xs text-amber-300 bg-amber-950/30 rounded-xl border border-amber-700/50">
+                        <div class="text-3xl mb-2">⛔</div>
+                        <p class="font-bold text-amber-200 text-sm">إذن قراءة سجل المكالمات غير ممنوح على الهاتف المضيف</p>
+                        <p class="text-amber-400/80 mt-1">${escHtml(callsPermissionWarning)}</p>
+                        <p class="text-amber-400/60 mt-2">افتح تطبيق "الجسر" على الهاتف المضيف → معالج الأذونات → اسمح بـ "سجل المكالمات" ثم أعد "جلب الحية 🔄"</p>
+                    </div>
+                `;
+                return;
+            }
+
             if (callsData.length === 0) {
                 container.innerHTML = `
                     <div class="p-8 text-center text-xs text-slate-500 bg-slate-900/40 rounded-xl border border-slate-800">
@@ -2413,16 +2999,16 @@
             }
 
             let filtered = callsData.filter(c => {
-                const matchesSearch = c.number.includes(callSearchQuery) || (c.name && c.name.toLowerCase().includes(callSearchQuery));
+                const matchesSearch = String(c.number || '').includes(callSearchQuery) || String(c.name || '').toLowerCase().includes(callSearchQuery) || String(resolveContactName(c.number) || '').toLowerCase().includes(callSearchQuery);
                 let matchesType = true;
-                if (callTypeFilter !== 'all') matchesType = c.type.toString() === callTypeFilter;
+                if (callTypeFilter !== 'all') matchesType = String(c.type) === callTypeFilter;
                 return matchesSearch && matchesType;
             });
 
             filtered.sort((a, b) => {
                 let comp = 0;
-                if (callSortBy === 'date') comp = a.date - b.date;
-                else if (callSortBy === 'duration') comp = a.durationSec - b.durationSec;
+                if (callSortBy === 'date') comp = (a.date || 0) - (b.date || 0);
+                else if (callSortBy === 'duration') comp = (a.durationSec || 0) - (b.durationSec || 0);
                 return callSortAsc ? comp : -comp;
             });
 
@@ -2432,20 +3018,23 @@
             }
 
             container.innerHTML = filtered.map(c => {
-                const badge = c.type === 1 ? '🟢 واردة' : c.type === 2 ? '🔵 صادرة' : '🔴 فائتة';
-                const formattedDuration = c.durationSec > 0 ? `${Math.floor(c.durationSec / 60)}د ${c.durationSec % 60}ث` : 'لم يتم الرد';
-                const dateStr = new Date(c.date).toLocaleString('ar-SA');
+                const typeVal = Number(c.type);
+                const badge = typeVal === 1 ? '🟢 واردة' : typeVal === 2 ? '🔵 صادرة' : typeVal === 3 ? '🔴 فائتة' : typeVal === 4 ? '🔴 مرفوضة' : typeVal === 5 ? '🟡 ردّ' : '📞 مكالمة';
+                const dur = c.durationSec || 0;
+                const formattedDuration = dur > 0 ? `${Math.floor(dur / 60)}د ${dur % 60}ث` : 'لم يتم الرد';
+                const dateStr = new Date(c.date || 0).toLocaleString('ar-SA');
+                const displayName = c.name || resolveContactName(c.number) || c.number || 'غير معروف';
 
                 return `
                     <div class="p-2.5 bg-slate-900/80 hover:bg-slate-800/80 border border-slate-800 rounded-xl flex items-center justify-between transition">
-                        <div class="flex items-center gap-2.5">
-                            <span class="text-[10px] px-2 py-0.5 rounded font-bold bg-slate-950 border border-slate-800">${badge}</span>
-                            <div>
-                                <p class="text-xs font-bold text-slate-200">${c.name || c.number}</p>
-                                <p class="text-[10px] font-mono text-slate-400">${dateStr}</p>
+                        <div class="flex items-center gap-2.5 min-w-0">
+                            <span class="text-[10px] px-2 py-0.5 rounded font-bold bg-slate-950 border border-slate-800 shrink-0">${badge}</span>
+                            <div class="min-w-0">
+                                <p class="text-xs font-bold text-slate-200 truncate">${escHtml(displayName)}</p>
+                                <p class="text-[10px] font-mono text-slate-400 truncate">${dateStr}${c.number && c.number !== displayName ? ' • ' + escHtml(c.number) : ''}</p>
                             </div>
                         </div>
-                        <span class="text-[11px] font-mono text-emerald-400 bg-slate-950 px-2 py-0.5 rounded border border-slate-800">${formattedDuration}</span>
+                        <span class="text-[11px] font-mono text-emerald-400 bg-slate-950 px-2 py-0.5 rounded border border-slate-800 shrink-0">${formattedDuration}</span>
                     </div>
                 `;
             }).join('');
@@ -2455,13 +3044,74 @@
         let notifSearchQuery = "";
         let notifSortAsc = false;
 
+        // ============================================================
+        //      Phase 2 — الإشعارات مجمّعة حسب التطبيق + نافذة تزلج
+        // ============================================================
+        function buildNotifGroups() {
+            const groups = {};
+            notificationsData.forEach(n => {
+                const pkg = n.packageName || 'unknown';
+                if (!groups[pkg]) groups[pkg] = { packageName: pkg, items: [] };
+                groups[pkg].items.push(n);
+            });
+            return Object.values(groups).map(g => {
+                g.items.sort((a, b) => (b.postTime || 0) - (a.postTime || 0));
+                g.count = g.items.length;
+                g.latest = g.items[0] || { title: '', text: '', postTime: 0 };
+                g.friendly = packageNameFriendly[g.packageName] || g.packageName;
+                return g;
+            });
+        }
+
+        function filterNotifGroups(groups) {
+            if (!notifSearchQuery) return groups;
+            return groups.filter(g =>
+                (g.friendly || '').toLowerCase().includes(notifSearchQuery) ||
+                (g.packageName || '').toLowerCase().includes(notifSearchQuery) ||
+                g.items.some(n => (n.title || '').toLowerCase().includes(notifSearchQuery) || (n.text || '').toLowerCase().includes(notifSearchQuery))
+            );
+        }
+
+        function openNotifGroupWindow(pkg) {
+            const group = (window.__notifGroups || []).find(g => g.packageName === pkg);
+            if (!group) { showToast("انتهت صلاحية هذه المجموعة — أعد جلب الإشعارات", "warning"); return; }
+            const rows = group.items.map(n => `
+                <div class="p-3 bg-slate-900/80 hover:bg-slate-800/80 border border-slate-800 rounded-xl transition">
+                    <div class="flex items-center justify-between mb-1">
+                        <div class="flex items-center gap-1.5 min-w-0">
+                            <span class="text-sm shrink-0">🔔</span>
+                            <p class="text-xs font-bold text-slate-100 truncate">${escHtml(n.title || '')}</p>
+                        </div>
+                        <span class="text-[10px] text-slate-400 font-mono shrink-0">${new Date(n.postTime || 0).toLocaleTimeString('ar-SA')}</span>
+                    </div>
+                    <p class="text-xs text-slate-300 leading-relaxed pr-5">${escHtml(n.text || '')}</p>
+                </div>
+            `).join('');
+
+            mountWindowOverlay(`
+                <div class="chat-header">
+                    <div class="flex items-center gap-2.5 min-w-0">
+                        <div class="w-9 h-9 rounded-full bg-amber-600/25 border border-amber-500/50 flex items-center justify-center text-sm shrink-0">🔔</div>
+                        <div class="min-w-0">
+                            <p class="text-sm font-bold text-slate-100 truncate">${escHtml(group.friendly || pkg)}</p>
+                            <p class="text-[10px] font-mono text-slate-500 truncate">${escHtml(pkg)} • ${group.count} إشعار</p>
+                        </div>
+                    </div>
+                    <button onclick="closeWindowOverlay()" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-rose-600/80 border border-slate-700 text-slate-300 hover:text-white flex items-center justify-center text-sm font-bold transition">✕</button>
+                </div>
+                <div class="chat-body custom-scrollbar" style="gap: 8px;">
+                    ${rows || '<p class="text-center text-xs text-slate-500">لا توجد إشعارات</p>'}
+                </div>
+            `);
+        }
+
         function renderNotificationsListView() {
             const panel = document.getElementById("panel-content");
             panel.innerHTML = `
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-2.5 mb-2.5 border-b border-slate-800 gap-2">
                     <div>
                         <h2 class="text-lg md:text-xl font-bold text-emerald-300">🔔 الإشعارات الحية</h2>
-                        <p class="text-xs text-slate-400">مراقبة ورصد إشعارات النظام وتطبيقات الهاتف المضيف الحية</p>
+                        <p class="text-xs text-slate-400">مجمّعة حسب التطبيق — انقر المجموعة لفتح نافذة إشعاراتها كاملة</p>
                     </div>
                     <button onclick="sendRPCCommand('notifications_list'); showToast('جاري جلب إشعارات المضيف الحية...', 'info');" class="bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs px-3 py-1.5 rounded-lg transition flex items-center gap-1">
                         <span>جلب الحية 🔄</span>
@@ -2478,6 +3128,7 @@
                             ${notifSortAsc ? 'الأقدم أولاً ⬆️' : 'الأحدث أولاً ⬇️'}
                         </button>
                     </div>
+                    ${renderModeButtons('notifications')}
                 </div>
 
                 <!-- Notifications List -->
@@ -2503,11 +3154,42 @@
                 return;
             }
 
+            const notifMode = listModes.notifications || 'groups';
+
+            // ===== وضع المجموعات حسب التطبيق (الافتراضي الجديد) =====
+            if (notifMode === 'groups') {
+                window.__notifGroups = filterNotifGroups(buildNotifGroups());
+                if (window.__notifGroups.length === 0) {
+                    container.innerHTML = `<div class="p-6 text-center text-xs text-slate-500 bg-slate-900/40 rounded-xl border border-slate-800">لا توجد إشعارات مطابقة للبحث.</div>`;
+                    return;
+                }
+                container.innerHTML = window.__notifGroups.map(g => `
+                    <div onclick="openNotifGroupWindow('${(g.packageName || '').replace(/'/g, "")}')" class="p-3 bg-slate-900/80 hover:bg-slate-800/80 border border-slate-800 rounded-xl transition cursor-pointer group">
+                        <div class="flex items-center gap-2.5">
+                            <div class="w-9 h-9 rounded-full bg-amber-600/25 border border-amber-500/40 flex items-center justify-center text-base shrink-0">🔔</div>
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center justify-between gap-2">
+                                    <p class="text-xs font-bold text-slate-100 truncate">${escHtml(g.friendly || g.packageName)}</p>
+                                    <span class="text-[9px] text-slate-500 font-mono shrink-0">${new Date(g.latest.postTime || 0).toLocaleString('ar-SA')}</span>
+                                </div>
+                                <div class="flex items-center justify-between gap-2 mt-0.5">
+                                    <p class="text-[11px] text-slate-400 truncate">${escHtml((g.latest.title || '') + ' — ' + (g.latest.text || '')).slice(0, 90)}</p>
+                                    <span class="text-[9px] px-1.5 py-0.5 rounded-full bg-amber-950 border border-amber-600/50 text-amber-300 font-bold shrink-0">${g.count} إشعار</span>
+                                </div>
+                            </div>
+                            <span class="text-slate-600 group-hover:text-amber-400 transition shrink-0">‹</span>
+                        </div>
+                    </div>
+                `).join('');
+                return;
+            }
+
+            // ===== الأوضاع المسطحة (تفاصيل/صغير/متوسط/كبير) =====
             let filtered = notificationsData.filter(n => {
-                return n.title.toLowerCase().includes(notifSearchQuery) || n.text.toLowerCase().includes(notifSearchQuery) || n.packageName.toLowerCase().includes(notifSearchQuery);
+                return (n.title || '').toLowerCase().includes(notifSearchQuery) || (n.text || '').toLowerCase().includes(notifSearchQuery) || (n.packageName || '').toLowerCase().includes(notifSearchQuery);
             });
 
-            filtered.sort((a, b) => notifSortAsc ? (a.postTime - b.postTime) : (b.postTime - a.postTime));
+            filtered.sort((a, b) => notifSortAsc ? (a.postTime || 0) - (b.postTime || 0) : (b.postTime || 0) - (a.postTime || 0));
 
             if (filtered.length === 0) {
                 container.innerHTML = `<div class="p-6 text-center text-xs text-slate-500 bg-slate-900/40 rounded-xl border border-slate-800">لا توجد إشعارات مطابقة.</div>`;
@@ -2515,18 +3197,21 @@
             }
 
             container.innerHTML = filtered.map(n => {
-                const dateStr = new Date(n.postTime).toLocaleTimeString('ar-SA');
+                const dateStr = new Date(n.postTime || 0).toLocaleTimeString('ar-SA');
+                const tSize = notifMode === 'small' ? 'text-[10px]' : notifMode === 'large' ? 'text-sm' : 'text-xs';
+                const pad = notifMode === 'small' ? 'p-2' : notifMode === 'large' ? 'p-4' : 'p-3';
+                const friendly = packageNameFriendly[n.packageName] || n.packageName || 'unknown';
                 return `
-                    <div class="p-3 bg-slate-900/80 hover:bg-slate-800/80 border border-slate-800 rounded-xl transition">
+                    <div class="${pad} bg-slate-900/80 hover:bg-slate-800/80 border border-slate-800 rounded-xl transition">
                         <div class="flex items-center justify-between mb-1">
-                            <div class="flex items-center gap-1.5">
-                                <span class="text-sm">🔔</span>
-                                <p class="text-xs font-bold text-slate-100">${n.title}</p>
-                                <span class="text-[9px] font-mono text-slate-500 bg-slate-950 px-1.5 py-0.5 rounded">${n.packageName}</span>
+                            <div class="flex items-center gap-1.5 min-w-0">
+                                <span class="text-sm shrink-0">🔔</span>
+                                <p class="${notifMode === 'large' ? 'text-sm' : 'text-xs'} font-bold text-slate-100 truncate">${escHtml(n.title || '')}</p>
+                                <span class="text-[9px] font-mono text-slate-500 bg-slate-950 px-1.5 py-0.5 rounded truncate shrink-0">${escHtml(friendly)}</span>
                             </div>
-                            <span class="text-[10px] text-slate-400 font-mono">${dateStr}</span>
+                            <span class="text-[10px] text-slate-400 font-mono shrink-0">${dateStr}</span>
                         </div>
-                        <p class="text-xs text-slate-300 leading-relaxed pr-5">${n.text}</p>
+                        <p class="${tSize} text-slate-300 leading-relaxed pr-5">${escHtml(n.text || '')}</p>
                     </div>
                 `;
             }).join('');

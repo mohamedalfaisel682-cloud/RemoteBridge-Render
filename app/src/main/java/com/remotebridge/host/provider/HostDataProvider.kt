@@ -493,4 +493,151 @@ class HostDataProvider(private val context: Context) {
             storageFreeBytes = stat.freeBytes
         )
     }
+
+    /**
+     * يقرأ أحدث رسالة نصية (لأحداث الدفع الحي Live Push).
+     */
+    suspend fun readLatestSms(): SmsMessage? = withContext(Dispatchers.IO) {
+        try {
+            context.contentResolver.query(
+                Telephony.Sms.CONTENT_URI,
+                arrayOf(
+                    Telephony.Sms._ID,
+                    Telephony.Sms.THREAD_ID,
+                    Telephony.Sms.ADDRESS,
+                    Telephony.Sms.BODY,
+                    Telephony.Sms.DATE,
+                    Telephony.Sms.TYPE
+                ),
+                null,
+                null,
+                "${Telephony.Sms.DATE} DESC LIMIT 1"
+            )?.use { cursor ->
+                if (cursor.moveToFirst()) {
+                    SmsMessage(
+                        id = cursor.getLong(cursor.getColumnIndexOrThrow(Telephony.Sms._ID)),
+                        threadId = cursor.getLong(cursor.getColumnIndexOrThrow(Telephony.Sms.THREAD_ID)),
+                        address = cursor.getString(cursor.getColumnIndexOrThrow(Telephony.Sms.ADDRESS)) ?: "",
+                        body = cursor.getString(cursor.getColumnIndexOrThrow(Telephony.Sms.BODY)) ?: "",
+                        date = cursor.getLong(cursor.getColumnIndexOrThrow(Telephony.Sms.DATE)),
+                        type = cursor.getInt(cursor.getColumnIndexOrThrow(Telephony.Sms.TYPE)),
+                        contactName = null
+                    )
+                } else null
+            }
+        } catch (t: Throwable) {
+            Log.e(TAG, "فشل قراءة أحدث رسالة", t)
+            null
+        }
+    }
+
+    /**
+     * يقرأ آخر سجل مكالمة (لأحداث الدفع الحي Live Push).
+     */
+    suspend fun readLatestCall(): CallLogItem? = withContext(Dispatchers.IO) {
+        try {
+            context.contentResolver.query(
+                CallLog.Calls.CONTENT_URI,
+                arrayOf(
+                    CallLog.Calls._ID,
+                    CallLog.Calls.NUMBER,
+                    CallLog.Calls.DATE,
+                    CallLog.Calls.DURATION,
+                    CallLog.Calls.TYPE
+                ),
+                null,
+                null,
+                "${CallLog.Calls.DATE} DESC LIMIT 1"
+            )?.use { cursor ->
+                if (cursor.moveToFirst()) {
+                    CallLogItem(
+                        id = cursor.getLong(cursor.getColumnIndexOrThrow(CallLog.Calls._ID)),
+                        number = cursor.getString(cursor.getColumnIndexOrThrow(CallLog.Calls.NUMBER)) ?: "",
+                        date = cursor.getLong(cursor.getColumnIndexOrThrow(CallLog.Calls.DATE)),
+                        durationSec = cursor.getLong(cursor.getColumnIndexOrThrow(CallLog.Calls.DURATION)),
+                        type = cursor.getInt(cursor.getColumnIndexOrThrow(CallLog.Calls.TYPE))
+                    )
+                } else null
+            }
+        } catch (t: Throwable) {
+            Log.e(TAG, "فشل قراءة أحدث مكالمة", t)
+            null
+        }
+    }
+
+    /**
+     * يُرجع مصغرة صورة/فيديو حقيقية مرمّزة Base64 Data URL.
+     * المحاولة أولاً عبر MediaStore (لأحمد قوائم الوسائط)، ثم عبر مسار الملف المباشر (لمستكشف التخزين).
+     */
+    suspend fun readThumbnailDataUrl(fileId: Long, filePath: String? = null): String? =
+        withContext(Dispatchers.IO) {
+            try {
+                var bitmap: android.graphics.Bitmap? = null
+
+                if (Build.VERSION.SDK_INT >= 29) {
+                    listOf(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                        MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+                    ).forEach { base ->
+                        if (bitmap == null) {
+                            try {
+                                bitmap = context.contentResolver.loadThumbnail(
+                                    android.content.ContentUris.withAppendedId(base, fileId),
+                                    android.util.Size(160, 160),
+                                    null
+                                )
+                            } catch (_: Throwable) { }
+                        }
+                    }
+                }
+
+                if (bitmap == null) {
+                    try {
+                        bitmap = MediaStore.Images.Thumbnails.getThumbnail(
+                            context.contentResolver, fileId,
+                            MediaStore.Images.Thumbnails.MICRO_KIND, null
+                        )
+                    } catch (_: Throwable) { }
+                }
+
+                if (bitmap == null && filePath != null) {
+                    try {
+                        val file = java.io.File(filePath)
+                        val mime = getMimeType(file.name)
+                        if (mime.startsWith("image/")) {
+                            val bounds = android.graphics.BitmapFactory.Options().apply { inJustDecodeBounds = true }
+                            android.graphics.BitmapFactory.decodeFile(filePath, bounds)
+                            if (bounds.outWidth > 0 && bounds.outHeight > 0) {
+                                var sample = 1
+                                while (bounds.outWidth / (sample * 2) >= 160 || bounds.outHeight / (sample * 2) >= 160) {
+                                    sample *= 2
+                                }
+                                bitmap = android.graphics.BitmapFactory.decodeFile(
+                                    filePath,
+                                    android.graphics.BitmapFactory.Options().apply { inSampleSize = sample }
+                                )
+                            }
+                        } else if (mime.startsWith("video/")) {
+                            val retriever = android.media.MediaMetadataRetriever()
+                            try {
+                                retriever.setDataSource(filePath)
+                                bitmap = retriever.getFrameAtTime(1_000_000L)
+                            } finally {
+                                try { retriever.release() } catch (_: Throwable) { }
+                            }
+                        }
+                    } catch (t: Throwable) {
+                        Log.w(TAG, "فشل توليد مصغرة من المسار: ${t.message}")
+                    }
+                }
+
+                val bmp = bitmap ?: return@withContext null
+                val out = java.io.ByteArrayOutputStream()
+                bmp.compress(android.graphics.Bitmap.CompressFormat.JPEG, 60, out)
+                "data:image/jpeg;base64," + android.util.Base64.encodeToString(out.toByteArray(), android.util.Base64.NO_WRAP)
+            } catch (t: Throwable) {
+                Log.e(TAG, "فشل توليد المصغرة", t)
+                null
+            }
+        }
 }

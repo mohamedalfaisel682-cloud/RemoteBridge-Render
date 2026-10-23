@@ -329,6 +329,19 @@ class PeerConnectionManager(
 
             videoTrack = factory.createVideoTrack("ARDAMSv0", videoSource!!)
             connection.addTrack(videoTrack, listOf("screenStream"))
+
+            // صوت الشاشة: يُنشأ الميكروفون مساراً مكتوماً افتراضياً (السياسة الجديدة)
+            // ليستطيع المتحكم تفعيله لاحقاً بنقرة على مكبر الصوت خلال بث الشاشة.
+            try {
+                val audioConstraints = MediaConstraints()
+                val audioSource = factory.createAudioSource(audioConstraints)
+                audioTrack = factory.createAudioTrack("ARDAMSa0", audioSource)
+                isAudioStreamingEnabled = false
+                audioTrack?.setEnabled(false)
+                connection.addTrack(audioTrack, listOf("screenStream"))
+            } catch (t: Throwable) {
+                Log.w(TAG, "تعذّر تهيئة مسار الصوت مع بث الشاشة (سيبقى البث صامتاً): ${t.message}")
+            }
             return true
         } catch (t: Throwable) {
             Log.e(TAG, "فشل بدء بث الشاشة", t)

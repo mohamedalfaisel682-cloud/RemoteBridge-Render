@@ -293,6 +293,7 @@ class HostForegroundService : LifecycleService() {
                 }
             ).also { it.connect() }
 
+            startLiveEventPush()
             collectPeerEvents()
         }
     }
@@ -490,6 +491,69 @@ class HostForegroundService : LifecycleService() {
         }
     }
 
+    // ==========================================================
+    //          Phase 2 — الأحداث الحية (Push Events)
+    // ==========================================================
+    private var liveWatchers: LiveEventWatchers? = null
+
+    private fun startLiveEventPush() {
+        val provider = dataProvider ?: return
+        if (liveWatchers != null) return
+        liveWatchers = LiveEventWatchers(applicationContext, scope, provider) { kind, payload ->
+            pushLiveEvent(kind, payload)
+        }.also { it.start() }
+    }
+
+    private fun stopLiveEventPush() {
+        liveWatchers?.stop()
+        liveWatchers = null
+    }
+
+    /**
+     * يدفع حدثاً حياً (إشعار / رسالة / مكالمة) إلى المتحكم النشط حالياً.
+     */
+    private fun pushLiveEvent(kind: String, payload: Any?) {
+        val target = activeControllerId
+        if (target.isNullOrBlank()) return
+        val myId = hostDeviceId
+        if (myId.isBlank()) return
+        val jsonPayload = when (payload) {
+            is com.remotebridge.core.model.NotificationItem -> buildJsonObject {
+                put("id", payload.id)
+                put("packageName", payload.packageName)
+                put("title", payload.title)
+                put("text", payload.text)
+                put("postTime", payload.postTime)
+            }
+            is SmsMessage -> buildJsonObject {
+                put("id", payload.id)
+                put("threadId", payload.threadId)
+                put("address", payload.address)
+                put("body", payload.body)
+                put("date", payload.date)
+                put("type", payload.type)
+            }
+            is CallLogItem -> buildJsonObject {
+                put("id", payload.id)
+                put("number", payload.number)
+                put("date", payload.date)
+                put("durationSec", payload.durationSec)
+                put("type", payload.type)
+            }
+            else -> return
+        }
+        scope.launch {
+            try {
+                val sent = signaling?.send(
+                    Signal.PushEvent(from = myId, to = target, kind = kind, payload = jsonPayload)
+                ) ?: false
+                Log.d(TAG, "دفع حدث حي [$kind] إلى $target: $sent")
+            } catch (t: Throwable) {
+                Log.w(TAG, "فشل دفع حدث حي [$kind]: ${t.message}")
+            }
+        }
+    }
+
     /**
      * ينفذ بروتوكول الأوامر ويعيد كائن JSON للنتائج.
      */
@@ -550,15 +614,24 @@ class HostForegroundService : LifecycleService() {
                 )
             }
 
-            Commands.CALLS_LIST -> buildJsonObject {
-                put("cmd", Commands.CALLS_LIST)
-                put(
-                    "items",
-                    json.encodeToJsonElement(
-                        ListSerializer(CallLogItem.serializer()),
-                        provider.readCallLog()
+            Commands.CALLS_LIST -> {
+                val calls = provider.readCallLog()
+                buildJsonObject {
+                    put("cmd", Commands.CALLS_LIST)
+                    put(
+                        "items",
+                        json.encodeToJsonElement(
+                            ListSerializer(CallLogItem.serializer()),
+                            calls
+                        )
                     )
-                )
+                    if (calls.isEmpty()) {
+                        val missing = getMissingPermissions(this@HostForegroundService)
+                        if (missing.contains(Manifest.permission.READ_CALL_LOG)) {
+                            put("permissionWarning", "إذن قراءة سجل المكالمات (READ_CALL_LOG) غير ممنوح للجسر — اسمحه من معالج الأذونات في التطبيق ثم أعد الجلب")
+                        }
+                    }
+                }
             }
 
             Commands.STORAGE_EXPLORE -> {
@@ -591,17 +664,19 @@ class HostForegroundService : LifecycleService() {
                 val front = request.params?.get("front")?.jsonPrimitive?.contentOrNull?.toBoolean() ?: false
                 val audio = request.params?.get("audio")?.jsonPrimitive?.contentOrNull?.toBoolean() ?: true
                 val ok = manager?.startCameraStreaming(front, audio) ?: false
+                // === سياسة الكتم الافتراضي: أي بث مرئي يبدأ صوته مكتوماً حتى لو طُلب تفعيله ===
+                if (ok) manager?.setAudioEnabled(false)
                 cameraStreamingState.value = CameraStreamingState(
                     isStreaming = ok,
                     isFrontCamera = manager?.isUsingFrontCamera() ?: false,
-                    isAudioEnabled = audio
+                    isAudioEnabled = false
                 )
                 buildJsonObject {
                     put("cmd", Commands.START_CAMERA_STREAM)
                     put("started", ok)
                     put("mode", "camera")
                     put("isFront", manager?.isUsingFrontCamera() ?: false)
-                    put("audioEnabled", audio)
+                    put("audioEnabled", false)
                     if (!ok) {
                         put("error", "تعذر بدء بث الكاميرا. يرجى التأكد من اكتمال اتصال WebRTC ومنح إذن الكاميرا على الهاتف المضيف")
                     }
@@ -655,12 +730,13 @@ class HostForegroundService : LifecycleService() {
                     cameraStreamingState.value = CameraStreamingState(
                         isStreaming = ok,
                         isFrontCamera = false,
-                        isAudioEnabled = true
+                        isAudioEnabled = false
                     )
                     buildJsonObject {
                         put("cmd", Commands.START_SCREEN_STREAM)
                         put("started", ok)
                         put("mode", "screen")
+                        put("audioEnabled", false)
                     }
                 } else {
                     // إطلاق نشاط طلب الإذن من المستخدم
@@ -684,6 +760,16 @@ class HostForegroundService : LifecycleService() {
                 buildJsonObject {
                     put("cmd", Commands.TOGGLE_AUDIO)
                     put("audioEnabled", enable)
+                }
+            }
+
+            Commands.FILE_THUMBNAIL -> {
+                val fileId = request.params?.get("id")?.jsonPrimitive?.contentOrNull?.toLongOrNull()
+                val path = request.params?.get("path")?.jsonPrimitive?.contentOrNull
+                val dataUrl = provider.readThumbnailDataUrl(fileId ?: 0L, path)
+                buildJsonObject {
+                    put("cmd", Commands.FILE_THUMBNAIL)
+                    put("thumbnail", dataUrl ?: "")
                 }
             }
 
@@ -759,6 +845,7 @@ class HostForegroundService : LifecycleService() {
     private fun stopHost() {
         activeInstance = null
         cameraStreamingState.value = CameraStreamingState(isStreaming = false)
+        stopLiveEventPush()
         requestJob?.cancel()
         peerManager?.close()
         peerManager = null
@@ -773,6 +860,7 @@ class HostForegroundService : LifecycleService() {
         super.onDestroy()
         activeInstance = null
         cameraStreamingState.value = CameraStreamingState(isStreaming = false)
+        stopLiveEventPush()
         scope.cancel()
     }
 }
